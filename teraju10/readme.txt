@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.5.0
+Version: 1.6.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -116,6 +116,53 @@ kunjungan. Kalau nanti tagline diubah manual lewat Appearance > Customize >
 Site Identity, perubahan tersebut permanen — tema tidak akan menimpanya
 lagi. Ini murni supaya tagline langsung benar begitu tema di-upload, tanpa
 redaksi wajib buka Customizer dulu.
+
+== Postingan Terpopuler: berdasar tayangan, bukan komentar lagi ==
+Sejak v1.6.0, mode "otomatis" widget "Teraju: Postingan Terpopuler" mengurut
+artikel dari jumlah TAYANGAN 7 hari terakhir (rolling window, bukan reset
+tiap Senin) — bukan jumlah komentar seperti sebelumnya, yang sudah tidak
+relevan karena kolom komentar sudah dihapus dari tema (lihat v1.5.0) dan di
+banyak situs berita komentar memang sudah sepi walau pembacanya ramai.
+
+Cara kerja singkat (murni kode tema, tidak perlu plugin analytics):
+- Tayangan TIDAK dihitung lewat render halaman di server — itu tidak akan
+  akurat begitu situs dipasangi plugin cache, karena PHP tak dieksekusi
+  ulang untuk kunjungan yang disajikan dari cache. Sebagai gantinya,
+  browser pembaca yang lapor lewat satu request kecil terpisah ke
+  admin-ajax.php (endpoint yang memang selalu dijalankan dinamis, tidak
+  ikut ke-cache) setelah halaman selesai dimuat. Halaman artikelnya sendiri
+  tetap 100% bisa di-cache utuh oleh plugin cache apa pun.
+- Satu pembaca dihitung maksimal sekali per 30 menit per artikel (dicek di
+  localStorage browser), supaya reload berkali-kali tidak menggelembungkan
+  angka.
+- Total 7 hari terakhir dihitung ulang tiap ada tayangan baru, DAN oleh satu
+  cron harian tambahan — supaya artikel yang sudah berhenti dibaca ikut
+  "meluruh" dari daftar populer (bukan nyangkut selamanya dengan angka
+  lama dari minggu sebelumnya).
+- Kalau situs baru saja pindah ke tema ini dan belum ada data tayangan sama
+  sekali, widget otomatis jatuh ke artikel terbaru dulu (bukan tampil
+  kosong/acak) sampai data tayangan asli mulai terkumpul.
+
+Catatan jujur soal batasan: kalau memakai plugin CACHE HALAMAN dengan masa
+simpan (TTL) sangat panjang (mis. beberapa hari), sebagian kecil tayangan
+pada masa itu bisa tidak tercatat (kode keamanan/nonce di halaman ikut
+"membeku" selama page-nya belum di-generate ulang oleh plugin cache) —
+efeknya cuma sedikit kurang presisi di kondisi ekstrem itu, bukan halaman
+menjadi error. Kalau ke depannya butuh statistik pengunjung yang lebih
+detail/akurat (per negara, per perangkat, dst), tetap pertimbangkan
+memasang Google Analytics/Plausible/plugin statistik terpisah — fitur ini
+sengaja dibuat ringan hanya untuk kebutuhan "urutkan artikel terpopuler",
+bukan pengganti alat analitik.
+
+Widget ini masih bisa dipakai manual (isi ID artikel sendiri) lewat opsi
+"Manual" di pengaturan widget, kalau redaksi ingin mengatur urutannya
+sendiri untuk momen tertentu.
+
+== Perubahan v1.6.0 (Postingan Terpopuler berbasis tayangan) ==
+- Lihat "Postingan Terpopuler: berdasar tayangan, bukan komentar lagi" di
+  atas untuk detail lengkap. Ringkasnya: mode otomatis widget ini sekarang
+  memakai penghitung tayangan 7 hari terakhir buatan sendiri (ramah cache
+  halaman, tanpa plugin), bukan jumlah komentar.
 
 == Perubahan v1.5.0 (bungkus akhir: hapus elemen tak perlu, speed & SEO/AEO) ==
 - Tombol cari di header dibuang. Halaman hasil pencarian (search.php) tetap
@@ -308,6 +355,8 @@ teraju10/
     template-tags.php     -> fungsi bantu (breadcrumb, waktu baca, dst)
     price-ticker.php      -> ambil & cache harga emas/kurs otomatis (WP-Cron)
     seo-meta.php           -> meta description, Open Graph, Twitter Card
+    view-counter.php       -> penghitung tayangan 7 hari (utk Postingan Terpopuler)
   assets/js/main.js       -> dropdown menu, progress bar, simpan, bagikan
   assets/js/quote-share.js -> toolbar "kutip & bagikan" (hanya di artikel)
+  assets/js/view-tracker.js -> lapor tayangan artikel (ramah cache, lihat atas)
   assets/js/admin-widgets.js -> tombol upload gambar di widget Slot Iklan

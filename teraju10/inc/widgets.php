@@ -23,7 +23,7 @@ class Teraju10_Popular_Posts_Widget extends WP_Widget {
 			'teraju10_popular_posts',
 			__( 'Teraju: Postingan Terpopuler', 'teraju10' ),
 			array(
-				'description' => __( 'Daftar bernomor artikel terpopuler. Mode otomatis (berdasar jumlah komentar) atau masukkan ID artikel manual.', 'teraju10' ),
+				'description' => __( 'Daftar bernomor artikel terpopuler. Mode otomatis (berdasar jumlah tayangan 7 hari terakhir) atau masukkan ID artikel manual.', 'teraju10' ),
 			)
 		);
 	}
@@ -51,8 +51,29 @@ class Teraju10_Popular_Posts_Widget extends WP_Widget {
 			$query_args = array(
 				'post_type'           => 'post',
 				'posts_per_page'      => $count,
-				'orderby'             => 'comment_count',
-				'order'               => 'DESC',
+				/* Urut dari tayangan 7 hari terakhir tertinggi; kalau nilainya
+				   sama (mis. situs baru & belum ada data tayangan sama sekali,
+				   semuanya 0), jatuh ke artikel terbaru dulu — supaya widget
+				   tidak pernah tampil kosong/acak sebelum data terkumpul. */
+				'orderby'             => array(
+					'meta_value_num' => 'DESC',
+					'date'           => 'DESC',
+				),
+				'meta_key'            => TERAJU10_VIEWS_WEEKLY_META,
+				/* Sertakan juga artikel yang belum pernah tercatat tayangannya
+				   (meta belum ada sama sekali) — dianggap 0, tetap ikut diurut,
+				   bukan malah tersingkir dari daftar. */
+				'meta_query'          => array(
+					'relation' => 'OR',
+					array(
+						'key'     => TERAJU10_VIEWS_WEEKLY_META,
+						'compare' => 'EXISTS',
+					),
+					array(
+						'key'     => TERAJU10_VIEWS_WEEKLY_META,
+						'compare' => 'NOT EXISTS',
+					),
+				),
 				'ignore_sticky_posts' => true,
 			);
 		}

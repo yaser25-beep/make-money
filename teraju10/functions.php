@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'TERAJU10_VERSION' ) ) {
-	define( 'TERAJU10_VERSION', '1.5.0' );
+	define( 'TERAJU10_VERSION', '1.6.0' );
 }
 
 /**
@@ -216,6 +216,7 @@ require get_template_directory() . '/inc/template-tags.php';
 require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/meta-boxes.php';
 require get_template_directory() . '/inc/schema-markup.php';
+require get_template_directory() . '/inc/view-counter.php';
 require get_template_directory() . '/inc/widgets.php';
 require get_template_directory() . '/inc/price-ticker.php';
 require get_template_directory() . '/inc/seo-meta.php';
