@@ -41,14 +41,16 @@ function teraju10_render_summary_box( $post ) {
 	$value = get_post_meta( $post->ID, '_teraju_summary', true );
 	?>
 	<p>
-		<?php esc_html_e( 'Tulis jawaban langsung 40-60 kata di sini. Ini yang tampil di kotak "Ringkasan Cepat" di atas artikel, dan paling sering diambil AI Overview/Perplexity/ChatGPT sebagai kutipan. Kosongkan untuk memakai excerpt otomatis.', 'teraju10' ); ?>
+		<strong><?php esc_html_e( 'Satu poin inti per baris', 'teraju10' ); ?></strong>
+		&mdash;
+		<?php esc_html_e( 'tekan Enter untuk baris baru. Tulis 1-4 kalimat pendek yang MASING-MASING berdiri sendiri sebagai fakta/inti terpenting berita ini — gaya "Smart Brevity" yang dipakai Axios/Semafor, BUKAN satu paragraf panjang. Ini tampil sebagai ringkasan ber-bullet di atas artikel, dan paling sering dikutip AI Overview/Perplexity/ChatGPT. Kosongkan untuk memakai excerpt otomatis (kalau begitu, tampil sebagai satu kalimat biasa, bukan bullet).', 'teraju10' ); ?>
 	</p>
 	<textarea
 		name="teraju10_summary"
-		rows="3"
+		rows="4"
 		style="width:100%;"
-		maxlength="400"
-		placeholder="<?php esc_attr_e( 'Contoh: Harga rumah di Pontianak naik rata-rata 11% dalam setahun terakhir, dengan kenaikan tertajam di Pontianak Selatan.', 'teraju10' ); ?>"
+		maxlength="600"
+		placeholder="<?php esc_attr_e( "Contoh:\nHarga rumah di Pontianak naik rata-rata 11% dalam setahun terakhir\nKenaikan paling tajam terjadi di kawasan Pontianak Selatan\nPemicunya: proyek jalan lingkar baru dan lonjakan pendatang", 'teraju10' ); ?>"
 	><?php echo esc_textarea( $value ); ?></textarea>
 	<?php
 }

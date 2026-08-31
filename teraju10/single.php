@@ -17,9 +17,9 @@ while ( have_posts() ) :
 	$post_id      = get_the_ID();
 	$has_sidebar  = is_active_sidebar( 'post-sidebar' );
 	$layout_class = $has_sidebar ? 'post-layout' : 'post-layout no-sidebar';
-	$facts        = teraju10_get_facts( $post_id );
-	$summary      = teraju10_get_summary( $post_id );
-	$categories   = get_the_category();
+	$facts          = teraju10_get_facts( $post_id );
+	$summary_points = teraju10_get_summary_points( $post_id );
+	$categories     = get_the_category();
 	?>
 
 	<main>
@@ -70,10 +70,18 @@ while ( have_posts() ) :
 					</div>
 				</div>
 
-				<?php if ( $summary ) : ?>
+				<?php if ( ! empty( $summary_points ) ) : ?>
 					<div class="summary-box">
 						<div class="label"><?php esc_html_e( 'Ringkasan cepat', 'teraju10' ); ?></div>
-						<p><?php echo esc_html( $summary ); ?></p>
+						<?php if ( count( $summary_points ) > 1 ) : ?>
+							<ul>
+								<?php foreach ( $summary_points as $point ) : ?>
+									<li><?php echo esc_html( $point ); ?></li>
+								<?php endforeach; ?>
+							</ul>
+						<?php else : ?>
+							<p><?php echo esc_html( $summary_points[0] ); ?></p>
+						<?php endif; ?>
 					</div>
 				<?php endif; ?>
 

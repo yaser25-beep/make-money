@@ -136,20 +136,56 @@ function teraju10_breadcrumbs() {
 }
 
 /**
- * Ambil "Ringkasan Cepat" (untuk AEO) dari meta artikel, dengan fallback ke excerpt.
+ * Ambil "Ringkasan Cepat" sebagai poin-poin inti, gaya "Smart Brevity" ala
+ * Axios/Semafor: satu baris di kotak Ringkasan Cepat = satu poin/fakta
+ * terpenting, bukan satu paragraf panjang. Kalau isinya cuma satu baris
+ * (atau jatuh ke fallback excerpt), dikembalikan sebagai satu poin saja
+ * supaya tetap tampil sebagai kalimat biasa, bukan daftar ber-bullet yang
+ * aneh untuk satu kalimat. Dibatasi maksimal 4 poin biar tetap "cepat".
+ *
+ * @param int $post_id ID artikel.
+ * @return array
+ */
+function teraju10_get_summary_points( $post_id = 0 ) {
+	$post_id = $post_id ? $post_id : get_the_ID();
+	$raw     = get_post_meta( $post_id, '_teraju_summary', true );
+
+	if ( empty( $raw ) ) {
+		$raw = get_the_excerpt( $post_id );
+	}
+
+	$lines  = preg_split( '/\r\n|\r|\n/', (string) $raw );
+	$points = array();
+
+	foreach ( $lines as $line ) {
+		$line = trim( $line );
+		if ( '' !== $line ) {
+			$points[] = $line;
+		}
+	}
+
+	return array_slice( $points, 0, 4 );
+}
+
+/**
+ * Versi satu-string dari teraju10_get_summary_points(), tiap poin diberi
+ * titik penutup lalu digabung jadi satu paragraf. Dipakai untuk meta
+ * description / JSON-LD, yang butuh teks datar, bukan daftar.
  *
  * @param int $post_id ID artikel.
  * @return string
  */
 function teraju10_get_summary( $post_id = 0 ) {
-	$post_id = $post_id ? $post_id : get_the_ID();
-	$summary = get_post_meta( $post_id, '_teraju_summary', true );
+	$points = teraju10_get_summary_points( $post_id );
 
-	if ( empty( $summary ) ) {
-		$summary = get_the_excerpt( $post_id );
-	}
+	$points = array_map(
+		function ( $point ) {
+			return rtrim( $point, '.!?' ) . '.';
+		},
+		$points
+	);
 
-	return $summary;
+	return implode( ' ', $points );
 }
 
 /**

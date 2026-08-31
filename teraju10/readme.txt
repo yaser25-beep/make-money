@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.2.0
+Version: 1.3.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -22,6 +22,12 @@ atau plugin page builder.
 1. Appearance > Menus
    - Buat menu, isi dengan kategori (Berita, Ekonomi, Politik, dst).
    - Set "Menu Location" ke "Menu Utama".
+   - Supaya rapi, kategori serumpun (mis. Daerah, Nasional, Internasional di
+     bawah "Berita") bisa dijadikan submenu dropdown: di editor menu, seret
+     item itu sedikit ke kanan (indent) sampai posisinya jadi "sub item" di
+     bawah "Berita". Tema otomatis menampilkannya sebagai dropdown (buka
+     lewat hover di desktop, tap ikon panah di HP/tablet) — lihat "Submenu
+     dropdown" di bawah.
 
 2. Appearance > Widgets > Sidebar Artikel
    - Seret widget "Teraju: Postingan Terpopuler" ke sini untuk Top 10.
@@ -49,9 +55,18 @@ atau plugin page builder.
      disembunyikan, bukan error.
 
 5. Setiap kali menulis artikel baru (halaman edit artikel)
-   - Kotak "Ringkasan Cepat": isi 40-60 kata jawaban langsung. Ini yang
-     tampil di atas artikel dan paling sering dikutip AI Overview/
-     Perplexity/ChatGPT.
+   - Kotak "Ringkasan Cepat": tulis SATU POIN INTI PER BARIS (Enter untuk
+     baris baru), 1-4 kalimat pendek — gaya "Smart Brevity" (Axios/
+     Semafor), BUKAN satu paragraf panjang. Tiap baris harus benar-benar
+     berdiri sendiri sebagai fakta/inti terpenting berita ini, bukan basa-
+     basi pembuka. Contoh yang BENAR:
+       Harga rumah di Pontianak naik rata-rata 11% dalam setahun terakhir
+       Kenaikan paling tajam terjadi di kawasan Pontianak Selatan
+       Pemicunya: proyek jalan lingkar baru dan lonjakan pendatang
+     Kalau cuma diisi satu baris, tampil sebagai kalimat biasa (tidak jadi
+     daftar ber-bullet). Ini yang tampil di atas artikel dan paling sering
+     dikutip AI Overview/Perplexity/ChatGPT. Kosongkan untuk memakai
+     excerpt otomatis.
    - Kotak "Fakta Cepat" (opsional): satu baris satu fakta, format
      "Label|Nilai", contoh:
        Kenaikan harga rata-rata dalam setahun|+11%
@@ -110,6 +125,36 @@ updated) berlaku baik untuk nilai otomatis maupun manual.
   menggantikan garis pembatas — mengikuti gaya aplikasi berita modern
   (Google News, Apple News, BBC News) di layar sempit.
 
+== Perubahan v1.3.0 (submenu dropdown & Ringkasan Cepat ala Smart Brevity) ==
+- Submenu dropdown: item menu yang punya sub-item (mis. "Berita" dengan
+  anak menu Daerah/Nasional/Internasional) sekarang tampil sebagai dropdown
+  yang rapi, bukan sebaris flat yang berantakan. Terbuka lewat hover di
+  desktop; di HP/tablet, sebuah tombol panah kecil ditambahkan otomatis di
+  sebelah link untuk tap-to-toggle (karena hover tidak ada di layar sentuh).
+  Lihat "Submenu dropdown" di bawah untuk cara mengaturnya di Appearance >
+  Menus. Sebagai efek samping perbaikan ini, menu utama di HP kini melipat
+  ke baris kedua kalau item terlalu banyak, bukan discroll ke samping —
+  supaya dropdown tidak ikut terpotong oleh scroll container.
+- Ringkasan Cepat "diracik ulang" jadi gaya Smart Brevity (dipopulerkan
+  Axios, dipakai juga Semafor/Politico Playbook): sekarang berupa 1-4 poin
+  fakta inti yang tampil ber-bullet, bukan satu paragraf umum. Kotak edit
+  di halaman artikel juga diperbarui instruksinya (satu poin per baris).
+  Lihat "Fitur AHA" nomor 3 di bawah.
+
+== Submenu dropdown ==
+Di Appearance > Menus:
+1. Tambahkan semua item (Berita, Daerah, Nasional, Internasional, Ekonomi,
+   dst) ke menu seperti biasa.
+2. Untuk menjadikan Daerah/Nasional/Internasional sebagai sub-item di bawah
+   "Berita": seret kotak item itu sedikit ke KANAN sampai posisinya
+   ter-indent di bawah "Berita" (WordPress otomatis menandainya "sub item").
+3. Simpan menu. Tidak perlu setting tambahan di tema — begitu strukturnya
+   berjenjang, dropdown otomatis aktif.
+
+Kalau lebih suka menyembunyikannya sama sekali (bukan dropdown), cukup
+hapus item tersebut dari menu, atau jangan ditambahkan sejak awal — tanpa
+perlu mengubah kode.
+
 == Fitur AHA (ringan, jarang dipakai portal lokal) ==
 
 1. Kutip & bagikan (highlight-to-share)
@@ -127,6 +172,17 @@ updated) berlaku baik untuk nilai otomatis maupun manual.
    di JSON-LD NewsArticle, teknik yang dipopulerkan Washington Post supaya
    asisten suara (Google Assistant, dsb.) bisa membacakan ringkasan artikel
    dengan aman. Tidak menambah beban halaman sama sekali (hanya JSON-LD).
+
+3. Ringkasan Cepat ala Smart Brevity
+   Kotak "Ringkasan Cepat" di atas artikel sekarang berupa 1-4 poin fakta
+   inti ber-bullet (bukan satu paragraf basa-basi), gaya yang dipopulerkan
+   Axios dan ditiru Semafor/Politico Playbook — terbukti menaikkan angka
+   "baca sampai selesai" karena pembaca (dan AI Overview/Perplexity) bisa
+   langsung menangkap inti berita dalam 3 detik. Redaksi tinggal menulis
+   satu fakta terpenting per baris di kotak edit artikel; kalau cuma diisi
+   satu baris, otomatis tampil sebagai kalimat biasa (bukan bullet aneh
+   untuk satu poin). Sepenuhnya kompatibel dengan artikel lama yang sudah
+   ditulis satu paragraf.
 
 == Batasan yang perlu diketahui ==
 - Tema ini adalah tema klasik (PHP template), bukan block theme/FSE.

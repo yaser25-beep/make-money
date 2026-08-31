@@ -87,7 +87,7 @@ function teraju10_output_news_article_schema() {
 		 */
 		$schema['speakable'] = array(
 			'@type'       => 'SpeakableSpecification',
-			'cssSelector' => array( '.summary-box p' ),
+			'cssSelector' => array( '.summary-box p', '.summary-box li' ),
 		);
 	}
 
