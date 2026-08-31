@@ -52,30 +52,25 @@ endif;
 
 <header class="site-header">
 	<div class="wrap header-row">
-		<div>
-			<?php if ( has_custom_logo() ) : ?>
-				<div class="site-logo"><?php the_custom_logo(); ?></div>
-			<?php else : ?>
-				<a class="brand-mark" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<?php
-					$site_name = get_bloginfo( 'name' );
-					if ( false !== strpos( $site_name, '.' ) ) {
-						list( $main, $suffix ) = explode( '.', $site_name, 2 );
-						echo esc_html( $main ) . '<span>.' . esc_html( $suffix ) . '</span>';
-					} else {
-						echo esc_html( $site_name );
-					}
-					?>
-				</a>
-			<?php endif; ?>
-			<?php $description = get_bloginfo( 'description' ); ?>
-			<?php if ( $description ) : ?>
-				<p class="brand-tagline"><?php echo esc_html( $description ); ?></p>
-			<?php endif; ?>
-		</div>
-		<a class="search-btn" href="<?php echo esc_url( home_url( '/' ) ); ?>?s=" aria-label="<?php esc_attr_e( 'Cari', 'teraju10' ); ?>">
-			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-		</a>
+		<?php if ( has_custom_logo() ) : ?>
+			<div class="site-logo"><?php the_custom_logo(); ?></div>
+		<?php else : ?>
+			<a class="brand-mark" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+				<?php
+				$site_name = get_bloginfo( 'name' );
+				if ( false !== strpos( $site_name, '.' ) ) {
+					list( $main, $suffix ) = explode( '.', $site_name, 2 );
+					echo esc_html( $main ) . '<span>.' . esc_html( $suffix ) . '</span>';
+				} else {
+					echo esc_html( $site_name );
+				}
+				?>
+			</a>
+		<?php endif; ?>
+		<?php $description = get_bloginfo( 'description' ); ?>
+		<?php if ( $description ) : ?>
+			<p class="brand-tagline"><?php echo esc_html( $description ); ?></p>
+		<?php endif; ?>
 	</div>
 </header>
 

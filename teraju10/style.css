@@ -4,7 +4,7 @@ Theme URI: https://teraju.id
 Author: teraju.id
 Author URI: https://teraju.id
 Description: Tema berita modern untuk teraju.id — ringan, sadar SEO/GEO/AEO, dengan sidebar widget yang bisa diatur penuh dari dashboard tanpa Elementor. Warna diambil dari identitas Kalimantan Barat: emas (tambang & harga Antam) dan teal sungai Kapuas.
-Version: 1.4.0
+Version: 1.5.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.8
@@ -68,14 +68,14 @@ button,input,textarea{font-family:inherit;color:inherit;}
 .utility-bar .links a:hover{color:var(--ink);}
 
 .site-header{padding:20px 0 0;}
-/* Logo + tagline jadi fokus tunggal, ditengahkan; tombol cari ditaruh
-   melayang di pojok kanan supaya tidak ikut mendorong logo ke kiri. */
-.header-row{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding-bottom:16px;}
+/* Logo + tagline sebagai satu-satunya fokus di header, ditengahkan. */
+.header-row{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding-bottom:16px;}
 .site-logo img{max-height:46px;width:auto;}
 .brand-mark{font-family:var(--font-display);font-weight:700;font-size:28px;letter-spacing:-.01em;line-height:1;}
 .brand-mark span{color:var(--gold);}
-.brand-tagline{font-size:14px;color:var(--muted);margin-top:4px;}
-.search-btn{position:absolute;top:0;right:24px;width:38px;height:38px;border:1px solid var(--line-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);flex-shrink:0;background:none;cursor:pointer;}
+/* Ukuran & jarak tagline dibuat proporsional terhadap logo kecil di
+   atasnya — caption tipis ala motto masthead, bukan sub-judul besar. */
+.brand-tagline{font-size:12px;font-weight:500;letter-spacing:.03em;color:var(--muted);margin-top:5px;}
 
 nav.main-nav{border-top:1px solid var(--ink);border-bottom:1px solid var(--line);}
 nav.main-nav .wrap{padding-top:0;padding-bottom:0;}
@@ -276,7 +276,7 @@ h1.headline{font-family:var(--font-display);font-size:40px;font-weight:600;line-
 .related h2{font-family:var(--font-display);font-size:22px;font-weight:600;border-bottom:1px solid var(--ink);padding-bottom:10px;margin:0 0 22px;}
 
 /* ==========================================================================
-   5. Generic list pages (archive/search/author), pagination, 404, comments
+   5. Generic list pages (archive/search/author), pagination, 404
    ========================================================================== */
 .page-header{padding:36px 0 12px;}
 .page-header .wrap,.page-header .narrow{border-bottom:1px solid var(--ink);padding-bottom:18px;}
@@ -304,17 +304,6 @@ h1.headline{font-family:var(--font-display);font-size:40px;font-weight:600;line-
 .search-form{display:flex;gap:8px;max-width:480px;margin:0 auto;}
 .search-form input[type="search"]{flex:1;border:1px solid var(--line-strong);border-radius:20px;padding:10px 16px;font-size:14px;background:var(--surface);color:var(--ink);}
 .search-form button{border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:20px;padding:10px 20px;font-size:14px;cursor:pointer;}
-
-.comments-area{max-width:700px;margin:0 auto;padding:0 24px 60px;}
-.comments-title{font-family:var(--font-display);font-size:22px;font-weight:600;border-bottom:1px solid var(--ink);padding-bottom:10px;margin:0 0 22px;}
-.comment-list{list-style:none;margin:0;padding:0;}
-.comment-list .comment{border-bottom:1px solid var(--line);padding:18px 0;}
-.comment-author{font-weight:600;font-size:14px;}
-.comment-metadata{font-size:12px;color:var(--muted);margin-bottom:8px;}
-.comment-content p{margin:0 0 10px;font-size:15px;color:var(--ink-soft);}
-.comment-form input[type="text"],.comment-form input[type="email"],.comment-form textarea{width:100%;border:1px solid var(--line-strong);border-radius:6px;padding:10px 12px;margin-bottom:14px;background:var(--surface);color:var(--ink);font-size:14px;}
-.comment-form textarea{min-height:120px;}
-.comment-form .form-submit input{border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:20px;padding:10px 22px;cursor:pointer;font-size:14px;}
 
 /* ==========================================================================
    6. Footer

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'TERAJU10_VERSION' ) ) {
-	define( 'TERAJU10_VERSION', '1.4.0' );
+	define( 'TERAJU10_VERSION', '1.5.0' );
 }
 
 /**
@@ -25,7 +25,7 @@ function teraju10_setup() {
 	add_theme_support( 'responsive-embeds' );
 	add_theme_support(
 		'html5',
-		array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' )
+		array( 'search-form', 'gallery', 'caption', 'style', 'script' )
 	);
 	add_theme_support(
 		'custom-logo',
@@ -48,6 +48,46 @@ function teraju10_setup() {
 	);
 }
 add_action( 'after_setup_theme', 'teraju10_setup' );
+
+/**
+ * Setel tagline default situs SEKALI SAJA saat tema versi ini pertama kali
+ * dimuat (bukan tiap kunjungan, dan tidak akan menimpa lagi kalau nanti
+ * diubah manual lewat Appearance > Customize > Site Identity). Ini dipakai
+ * supaya tagline langsung berubah begitu tema ini di-upload/aktif, tanpa
+ * redaksi perlu buka Customizer dulu — tapi setelah itu, kolom tagline
+ * kembali jadi pengaturan biasa yang bebas diubah kapan saja.
+ */
+function teraju10_maybe_set_default_tagline() {
+	if ( get_option( 'teraju10_tagline_v2' ) ) {
+		return;
+	}
+	update_option( 'blogdescription', 'Solusi, alih-alih sensasi' );
+	update_option( 'teraju10_tagline_v2', '1' );
+}
+add_action( 'after_setup_theme', 'teraju10_maybe_set_default_tagline' );
+
+/**
+ * Bersihkan <head> dari elemen bawaan WordPress yang sudah jarang relevan
+ * (RSD/WLW untuk software blog lama, shortlink, versi WP) dan matikan
+ * script+style emoji bawaan (murni polyfill untuk browser sangat lama).
+ * Hemat beberapa request/inline-script kecil di SETIAP halaman tanpa
+ * mengubah fungsi apa pun — situs tetap ringan.
+ */
+function teraju10_head_cleanup() {
+	remove_action( 'wp_head', 'wp_generator' );
+	remove_action( 'wp_head', 'rsd_link' );
+	remove_action( 'wp_head', 'wlwmanifest_link' );
+	remove_action( 'wp_head', 'wp_shortlink_wp_head' );
+
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );
+	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+}
+add_action( 'init', 'teraju10_head_cleanup' );
 
 /**
  * Register widget areas (sidebar artikel + kolom footer).
@@ -116,12 +156,30 @@ function teraju10_scripts() {
 			)
 		);
 	}
-
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
 }
 add_action( 'wp_enqueue_scripts', 'teraju10_scripts' );
+
+/**
+ * Preconnect lebih awal ke domain Google Fonts, supaya koneksi (DNS + TLS)
+ * sudah siap SEBELUM tag <link> stylesheet fonts dibaca browser — beberapa
+ * ratus milidetik lebih cepat pada koneksi lambat, tanpa perlu meng-host
+ * sendiri file font.
+ *
+ * @param array  $urls URL yang mau di-hint.
+ * @param string $relation_type Jenis hint ('preconnect', 'dns-prefetch', dst).
+ * @return array
+ */
+function teraju10_resource_hints( $urls, $relation_type ) {
+	if ( 'preconnect' === $relation_type ) {
+		$urls[] = array(
+			'href' => 'https://fonts.gstatic.com',
+			'crossorigin',
+		);
+		$urls[] = 'https://fonts.googleapis.com';
+	}
+	return $urls;
+}
+add_filter( 'wp_resource_hints', 'teraju10_resource_hints', 10, 2 );
 
 /**
  * Excerpt length & "read more" string.
@@ -160,3 +218,4 @@ require get_template_directory() . '/inc/meta-boxes.php';
 require get_template_directory() . '/inc/schema-markup.php';
 require get_template_directory() . '/inc/widgets.php';
 require get_template_directory() . '/inc/price-ticker.php';
+require get_template_directory() . '/inc/seo-meta.php';

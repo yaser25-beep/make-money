@@ -146,12 +146,6 @@ while ( have_posts() ) :
 						</div>
 					</div>
 				<?php endif; ?>
-
-				<?php
-				if ( comments_open() || get_comments_number() ) {
-					comments_template();
-				}
-				?>
 			</article>
 
 			<?php if ( $has_sidebar ) : ?>

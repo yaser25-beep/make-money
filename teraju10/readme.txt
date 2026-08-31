@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.4.0
+Version: 1.5.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -41,8 +41,9 @@ atau plugin page builder.
      kebutuhan (link rubrik, halaman Redaksi, media sosial, dsb).
 
 4. Appearance > Customize
-   - Site Identity: unggah logo dan isi tagline ("Solusi, alih-alih
-     sensasi — portal Kalimantan Barat").
+   - Site Identity: unggah logo. Tagline ("Solusi, alih-alih sensasi")
+     terisi otomatis begitu tema ini aktif (lihat "Tagline otomatis" di
+     bawah) — tetap bebas diubah kapan saja lewat Site Identity kalau perlu.
    - Ticker Harga (Emas & Kurs): sudah update otomatis setiap hari secara
      default (lihat bagian "Ticker harga otomatis" di bawah). Angka manual
      di section ini tetap wajib diisi sebagai cadangan kalau sumber
@@ -107,6 +108,49 @@ langganan data API berbayar), developer tinggal pakai filter:
 
 Filter yang sama ($key: gold_price, gold_change, usd_idr, usd_change,
 updated) berlaku baik untuk nilai otomatis maupun manual.
+
+== Tagline otomatis ==
+Begitu tema ini aktif, tagline situs otomatis diisi "Solusi, alih-alih
+sensasi" — SEKALI SAJA saat pertama kali versi ini dimuat, tidak setiap
+kunjungan. Kalau nanti tagline diubah manual lewat Appearance > Customize >
+Site Identity, perubahan tersebut permanen — tema tidak akan menimpanya
+lagi. Ini murni supaya tagline langsung benar begitu tema di-upload, tanpa
+redaksi wajib buka Customizer dulu.
+
+== Perubahan v1.5.0 (bungkus akhir: hapus elemen tak perlu, speed & SEO/AEO) ==
+- Tombol cari di header dibuang. Halaman hasil pencarian (search.php) tetap
+  ada dan tetap bisa diakses lewat tautan langsung (?s=) kalau suatu saat
+  mau dipasang lagi di tempat lain (mis. widget), tapi tidak lagi tampil
+  otomatis di header.
+- Tagline diganti jadi "Solusi, alih-alih sensasi", ukurannya dibuat
+  proporsional terhadap logo yang sudah diperkecil (caption tipis ala motto
+  masthead), tetap rata tengah. Lihat "Tagline otomatis" di atas.
+- Form komentar & daftar komentar di bawah artikel dihapus total (bukan
+  cuma disembunyikan) — file comments.php dan CSS terkaitnya dibuang dari
+  paket tema. Kotak "Tinggalkan komentar" tidak akan muncul lagi di artikel
+  mana pun.
+- Speed & cache:
+  - Preconnect ke domain Google Fonts ditambahkan di <head>, supaya koneksi
+    ke font sudah siap sebelum stylesheet-nya diminta browser.
+  - Script emoji bawaan WordPress (polyfill lama yang jarang relevan lagi)
+    dan elemen <head> yang jarang dipakai (RSD/WLW, shortlink, tag versi
+    WP) dimatikan — beberapa request/inline-script kecil lebih sedikit di
+    SETIAP halaman.
+  - Semua script tema (main.js, quote-share.js) sudah dimuat di footer
+    (non-blocking) sejak awal; tidak ada perubahan di sini, sekadar
+    dikonfirmasi ulang saat audit.
+  - Tema ini tetap kompatibel dengan plugin cache halaman (WP Super Cache,
+    LiteSpeed Cache, WP Rocket, dst) — tidak ada output yang beda per
+    pengunjung di halaman yang di-cache (mode gelap otomatis lewat CSS,
+    ticker harga lewat WP-Cron tersimpan sama untuk semua pengunjung).
+- SEO & AI search: file baru inc/seo-meta.php menambahkan <meta
+  name="description">, Open Graph (og:title/og:description/og:image/dst),
+  dan Twitter Card di setiap halaman — dipakai mesin pencari, pratinjau
+  saat dibagikan ke WhatsApp/media sosial, dan beberapa AI search/crawler
+  yang membaca og:description sebagai salah satu sinyal ringkasan halaman.
+  Otomatis DILEWATI kalau situs sudah pakai plugin SEO populer (Yoast,
+  RankMath, All in One SEO, SEOPress) supaya tidak dobel dengan tag yang
+  sudah dihasilkan plugin tersebut.
 
 == Perubahan v1.2.0 (perbaikan tampilan mobile & header) ==
 - Hero homepage (headline utama + daftar berita di sampingnya) diganti dari
@@ -263,6 +307,7 @@ teraju10/
     widgets.php           -> widget Postingan Terpopuler & Slot Iklan
     template-tags.php     -> fungsi bantu (breadcrumb, waktu baca, dst)
     price-ticker.php      -> ambil & cache harga emas/kurs otomatis (WP-Cron)
-  assets/js/main.js       -> dark mode, progress bar, simpan, bagikan
+    seo-meta.php           -> meta description, Open Graph, Twitter Card
+  assets/js/main.js       -> dropdown menu, progress bar, simpan, bagikan
   assets/js/quote-share.js -> toolbar "kutip & bagikan" (hanya di artikel)
   assets/js/admin-widgets.js -> tombol upload gambar di widget Slot Iklan
