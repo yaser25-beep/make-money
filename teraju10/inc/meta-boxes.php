@@ -1,0 +1,106 @@
+<?php
+/**
+ * Meta box "Ringkasan Cepat" dan "Fakta Cepat" untuk halaman edit artikel.
+ * Ini yang mengisi kotak AEO/fact-box di template single.php.
+ *
+ * @package Teraju10
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+function teraju10_add_meta_boxes() {
+	add_meta_box(
+		'teraju10_summary',
+		__( 'Ringkasan Cepat (untuk AI & pencarian)', 'teraju10' ),
+		'teraju10_render_summary_box',
+		'post',
+		'normal',
+		'high'
+	);
+
+	add_meta_box(
+		'teraju10_facts',
+		__( 'Fakta Cepat', 'teraju10' ),
+		'teraju10_render_facts_box',
+		'post',
+		'normal',
+		'default'
+	);
+}
+add_action( 'add_meta_boxes', 'teraju10_add_meta_boxes' );
+
+/**
+ * Tampilan kotak Ringkasan Cepat.
+ *
+ * @param WP_Post $post Objek post.
+ */
+function teraju10_render_summary_box( $post ) {
+	wp_nonce_field( 'teraju10_save_meta', 'teraju10_meta_nonce' );
+	$value = get_post_meta( $post->ID, '_teraju_summary', true );
+	?>
+	<p>
+		<?php esc_html_e( 'Tulis jawaban langsung 40-60 kata di sini. Ini yang tampil di kotak "Ringkasan Cepat" di atas artikel, dan paling sering diambil AI Overview/Perplexity/ChatGPT sebagai kutipan. Kosongkan untuk memakai excerpt otomatis.', 'teraju10' ); ?>
+	</p>
+	<textarea
+		name="teraju10_summary"
+		rows="3"
+		style="width:100%;"
+		maxlength="400"
+		placeholder="<?php esc_attr_e( 'Contoh: Harga rumah di Pontianak naik rata-rata 11% dalam setahun terakhir, dengan kenaikan tertajam di Pontianak Selatan.', 'teraju10' ); ?>"
+	><?php echo esc_textarea( $value ); ?></textarea>
+	<?php
+}
+
+/**
+ * Tampilan kotak Fakta Cepat.
+ *
+ * @param WP_Post $post Objek post.
+ */
+function teraju10_render_facts_box( $post ) {
+	$value = get_post_meta( $post->ID, '_teraju_facts', true );
+	?>
+	<p>
+		<?php esc_html_e( 'Satu baris satu fakta, format: Label | Nilai. Kosongkan jika artikel ini tidak butuh kotak fakta.', 'teraju10' ); ?>
+	</p>
+	<textarea
+		name="teraju10_facts"
+		rows="5"
+		style="width:100%;font-family:monospace;"
+		placeholder="Kenaikan harga rata-rata dalam setahun|+11%&#10;Kawasan dengan kenaikan tertinggi|Pontianak Selatan"
+	><?php echo esc_textarea( $value ); ?></textarea>
+	<?php
+}
+
+/**
+ * Simpan data meta box dengan aman: cek nonce, cek autosave, cek hak akses.
+ *
+ * @param int $post_id ID post yang sedang disimpan.
+ */
+function teraju10_save_meta_boxes( $post_id ) {
+	if ( ! isset( $_POST['teraju10_meta_nonce'] ) ) {
+		return;
+	}
+
+	if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['teraju10_meta_nonce'] ) ), 'teraju10_save_meta' ) ) {
+		return;
+	}
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+
+	if ( isset( $_POST['teraju10_summary'] ) ) {
+		update_post_meta( $post_id, '_teraju_summary', sanitize_textarea_field( wp_unslash( $_POST['teraju10_summary'] ) ) );
+	}
+
+	if ( isset( $_POST['teraju10_facts'] ) ) {
+		update_post_meta( $post_id, '_teraju_facts', sanitize_textarea_field( wp_unslash( $_POST['teraju10_facts'] ) ) );
+	}
+}
+add_action( 'save_post', 'teraju10_save_meta_boxes' );
