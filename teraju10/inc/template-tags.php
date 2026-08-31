@@ -138,10 +138,21 @@ function teraju10_breadcrumbs() {
 /**
  * Ambil "Ringkasan Cepat" sebagai poin-poin inti, gaya "Smart Brevity" ala
  * Axios/Semafor: satu baris di kotak Ringkasan Cepat = satu poin/fakta
- * terpenting, bukan satu paragraf panjang. Kalau isinya cuma satu baris
- * (atau jatuh ke fallback excerpt), dikembalikan sebagai satu poin saja
- * supaya tetap tampil sebagai kalimat biasa, bukan daftar ber-bullet yang
- * aneh untuk satu kalimat. Dibatasi maksimal 4 poin biar tetap "cepat".
+ * terpenting. Urutan prioritas sumbernya:
+ *
+ * 1. Kotak "Ringkasan Cepat" kalau diisi redaksi — satu baris = satu poin.
+ * 2. Excerpt MANUAL (kotak "Excerpt" bawaan WordPress) kalau diisi — berarti
+ *    redaksi memang sengaja menulis ringkasan sendiri di sana.
+ * 3. Ekstraksi otomatis dari ISI artikel (teraju10_auto_summary_points()):
+ *    beberapa kalimat paling representatif dipilih berdasar kata-kata yang
+ *    paling sering muncul di seluruh artikel — bukan sekadar memotong
+ *    paragraf pertama, supaya lebih dekat ke "inti berita" yang sebenarnya.
+ * 4. Excerpt OTOMATIS WordPress (potongan awal konten) sebagai jaring
+ *    pengaman terakhir, kalau artikel terlalu pendek untuk poin (3).
+ *
+ * Kalau hasil akhirnya cuma satu poin, dikembalikan sebagai satu poin saja
+ * supaya tampil sebagai kalimat biasa, bukan daftar ber-bullet yang aneh
+ * untuk satu kalimat. Dibatasi maksimal 4 poin biar tetap "cepat".
  *
  * @param int $post_id ID artikel.
  * @return array
@@ -150,21 +161,262 @@ function teraju10_get_summary_points( $post_id = 0 ) {
 	$post_id = $post_id ? $post_id : get_the_ID();
 	$raw     = get_post_meta( $post_id, '_teraju_summary', true );
 
-	if ( empty( $raw ) ) {
-		$raw = get_the_excerpt( $post_id );
-	}
-
-	$lines  = preg_split( '/\r\n|\r|\n/', (string) $raw );
-	$points = array();
-
-	foreach ( $lines as $line ) {
-		$line = trim( $line );
-		if ( '' !== $line ) {
-			$points[] = $line;
+	if ( ! empty( $raw ) ) {
+		$lines  = preg_split( '/\r\n|\r|\n/', (string) $raw );
+		$points = array();
+		foreach ( $lines as $line ) {
+			$line = trim( $line );
+			if ( '' !== $line ) {
+				$points[] = $line;
+			}
+		}
+		if ( ! empty( $points ) ) {
+			return array_slice( $points, 0, 4 );
 		}
 	}
 
-	return array_slice( $points, 0, 4 );
+	$manual_excerpt = trim( wp_strip_all_tags( (string) get_post_field( 'post_excerpt', $post_id ) ) );
+	if ( '' !== $manual_excerpt ) {
+		return array( $manual_excerpt );
+	}
+
+	$auto_points = teraju10_auto_summary_points( $post_id, 3 );
+	if ( ! empty( $auto_points ) ) {
+		return $auto_points;
+	}
+
+	$fallback = get_the_excerpt( $post_id );
+	return $fallback ? array( $fallback ) : array();
+}
+
+/**
+ * Ekstraksi otomatis beberapa kalimat paling representatif dari ISI
+ * artikel (bukan cuma paragraf pertama) — ringkasan ekstraktif berbasis
+ * frekuensi kata, versi ringan dari teknik yang sama dasarnya dengan
+ * TextRank. Ini HANYA dipakai kalau redaksi tidak mengisi Ringkasan Cepat
+ * maupun Excerpt manual, jadi ini jaring pengaman, bukan pengganti editor
+ * manusia — tapi jauh lebih mendekati "inti artikel" dibanding sekadar
+ * memotong kata-kata pertama.
+ *
+ * Cara kerja singkat:
+ * 1. Pecah isi artikel jadi kalimat, skor tiap kalimat dari frekuensi
+ *    kata-katanya (minus stopword) di seluruh artikel — MURNI dari kata,
+ *    tanpa bobot posisi, supaya kalimat penting di tengah/akhir artikel
+ *    punya peluang sama besar terpilih seperti kalimat pembuka.
+ * 2. Kalimat dibagi jadi $max_points "seksi" berurutan (kalau diminta 3
+ *    poin: sepertiga awal/tengah/akhir artikel), lalu dari TIAP seksi
+ *    diambil satu kalimat berskor tertinggi. Ini jaminan struktural supaya
+ *    hasilnya benar-benar menyebar di sepanjang artikel, bukan cuma dari
+ *    paragraf pembuka — itu keluhan utama yang mau diperbaiki di sini.
+ * 3. Kalimat yang tereliminasi karena terlalu mirip kalimat lain yang
+ *    sudah terpilih (dedup overlap) digantikan kandidat berikutnya.
+ * 4. Urutkan lagi sesuai posisi asli di artikel, biar mengalir alami.
+ *
+ * @param int $post_id ID artikel.
+ * @param int $max_points Jumlah maksimal poin.
+ * @return array
+ */
+function teraju10_auto_summary_points( $post_id, $max_points = 3 ) {
+	$content = get_post_field( 'post_content', $post_id );
+	/* Pastikan ada batas spasi di antara elemen blok (paragraf, heading,
+	   dst) SEBELUM tag-nya dibuang — beberapa editor menyimpan HTML tanpa
+	   spasi di antar tag, yang tanpa ini bisa membuat kalimat terakhir satu
+	   paragraf "menempel" ke kalimat pertama paragraf berikutnya. */
+	$content = preg_replace( '/<\/(p|div|li|h[1-6]|blockquote|br)[^>]*>/i', "$0\n\n", $content );
+	$content = wp_strip_all_tags( strip_shortcodes( $content ) );
+	$content = trim( preg_replace( '/\s+/u', ' ', $content ) );
+
+	if ( '' === $content ) {
+		return array();
+	}
+
+	$sentences = preg_split( '/(?<=[.!?])\s+(?=[A-Z0-9"\'\x{2018}\x{201C}])/u', $content );
+	$sentences = is_array( $sentences ) ? $sentences : array( $content );
+
+	$candidates = array();
+	foreach ( $sentences as $index => $sentence ) {
+		$sentence = trim( $sentence );
+		if ( '' === $sentence ) {
+			continue;
+		}
+		$word_count = str_word_count( $sentence );
+		/* Buang kalimat yang kependekan (biasanya sub-judul/label yang
+		   kepotong) atau kepanjangan (kurang padat untuk sebuah "poin"). */
+		if ( $word_count < 6 || $word_count > 40 ) {
+			continue;
+		}
+		$candidates[] = array(
+			'text'  => $sentence,
+			'index' => $index,
+		);
+	}
+
+	if ( empty( $candidates ) ) {
+		return array();
+	}
+
+	if ( count( $candidates ) <= $max_points ) {
+		return wp_list_pluck( $candidates, 'text' );
+	}
+
+	$stopwords = teraju10_id_stopwords();
+	$word_freq = array();
+	foreach ( $candidates as $c ) {
+		foreach ( teraju10_tokenize( $c['text'] ) as $word ) {
+			if ( mb_strlen( $word ) < 3 || isset( $stopwords[ $word ] ) ) {
+				continue;
+			}
+			$word_freq[ $word ] = isset( $word_freq[ $word ] ) ? $word_freq[ $word ] + 1 : 1;
+		}
+	}
+
+	foreach ( $candidates as $i => $c ) {
+		$score = 0.0;
+		$scored_word = 0;
+		foreach ( teraju10_tokenize( $c['text'] ) as $word ) {
+			if ( isset( $word_freq[ $word ] ) ) {
+				$score += $word_freq[ $word ];
+				++$scored_word;
+			}
+		}
+		$candidates[ $i ]['score'] = $scored_word ? ( $score / $scored_word ) : 0;
+	}
+
+	/* Bagi kandidat (yang urutannya masih sesuai posisi asli di artikel)
+	   jadi $max_points seksi berurutan, lalu ambil satu kalimat berskor
+	   tertinggi dari TIAP seksi — jaminan sebaran, bukan cuma soal siapa
+	   duluan/terdepan di artikel. */
+	$total        = count( $candidates );
+	$section_size = max( 1, (int) ceil( $total / $max_points ) );
+	$sections     = array_chunk( $candidates, $section_size );
+
+	$picked = array();
+	foreach ( $sections as $section ) {
+		usort(
+			$section,
+			function ( $a, $b ) {
+				return $b['score'] <=> $a['score'];
+			}
+		);
+
+		foreach ( $section as $c ) {
+			$is_redundant = false;
+			foreach ( $picked as $already ) {
+				if ( teraju10_sentence_overlap( $c['text'], $already['text'] ) > 0.55 ) {
+					$is_redundant = true;
+					break;
+				}
+			}
+			if ( ! $is_redundant ) {
+				$picked[] = $c;
+				break;
+			}
+		}
+	}
+
+	/* Kalau ada seksi yang gagal menyumbang poin (semua kandidatnya
+	   ternyata redundan dengan poin lain), isi kekurangannya dari sisa
+	   kandidat berskor tertinggi supaya jumlah poin tetap maksimal. */
+	if ( count( $picked ) < min( $max_points, $total ) ) {
+		$picked_texts = wp_list_pluck( $picked, 'text' );
+		$remaining    = array_filter(
+			$candidates,
+			function ( $c ) use ( $picked_texts ) {
+				return ! in_array( $c['text'], $picked_texts, true );
+			}
+		);
+		usort(
+			$remaining,
+			function ( $a, $b ) {
+				return $b['score'] <=> $a['score'];
+			}
+		);
+		foreach ( $remaining as $c ) {
+			if ( count( $picked ) >= $max_points ) {
+				break;
+			}
+			$picked[] = $c;
+		}
+	}
+
+	usort(
+		$picked,
+		function ( $a, $b ) {
+			return $a['index'] <=> $b['index'];
+		}
+	);
+
+	return wp_list_pluck( $picked, 'text' );
+}
+
+/**
+ * Pecah teks jadi array kata lowercase (huruf/angka saja), buat kebutuhan
+ * penghitungan frekuensi & overlap kalimat.
+ *
+ * @param string $text Teks masukan.
+ * @return array
+ */
+function teraju10_tokenize( $text ) {
+	$text = mb_strtolower( $text, 'UTF-8' );
+	preg_match_all( '/[a-z0-9]+/u', $text, $matches );
+	return $matches[0];
+}
+
+/**
+ * Rasio kemiripan dua kalimat (Jaccard sederhana atas kata unik), dipakai
+ * untuk membuang poin yang isinya terlalu mirip dengan poin lain yang
+ * sudah terpilih.
+ *
+ * @param string $a Kalimat pertama.
+ * @param string $b Kalimat kedua.
+ * @return float 0..1
+ */
+function teraju10_sentence_overlap( $a, $b ) {
+	$words_a = array_unique( teraju10_tokenize( $a ) );
+	$words_b = array_unique( teraju10_tokenize( $b ) );
+
+	if ( empty( $words_a ) || empty( $words_b ) ) {
+		return 0.0;
+	}
+
+	$common = array_intersect( $words_a, $words_b );
+	$union  = array_unique( array_merge( $words_a, $words_b ) );
+
+	return count( $union ) ? ( count( $common ) / count( $union ) ) : 0.0;
+}
+
+/**
+ * Daftar stopword Bahasa Indonesia (kata umum yang dibuang dari
+ * penghitungan frekuensi, karena tidak menandakan topik apa pun).
+ * Sengaja disimpan statis di dalam fungsi (bukan file terpisah) supaya
+ * ringkasan ini tetap "ringan" — tidak ada file/aset tambahan.
+ *
+ * @return array Kata sebagai key, untuk pengecekan isset() yang cepat.
+ */
+function teraju10_id_stopwords() {
+	static $stopwords = null;
+
+	if ( null === $stopwords ) {
+		$list = array(
+			'yang', 'dan', 'di', 'ke', 'dari', 'ini', 'itu', 'untuk', 'dengan', 'pada',
+			'adalah', 'akan', 'atau', 'juga', 'tidak', 'dalam', 'dapat', 'oleh', 'sebagai',
+			'karena', 'yaitu', 'namun', 'tersebut', 'tetapi', 'sudah', 'belum', 'masih',
+			'saat', 'ketika', 'jika', 'kalau', 'tapi', 'tak', 'ada', 'bisa', 'harus',
+			'tentang', 'para', 'antara', 'setelah', 'sebelum', 'saja', 'lebih', 'sangat',
+			'begitu', 'hingga', 'sampai', 'agar', 'supaya', 'maka', 'sehingga', 'yakni',
+			'serta', 'bagi', 'terhadap', 'kata', 'ujar', 'ungkap', 'jelas', 'tutur',
+			'menurut', 'bahwa', 'satu', 'dua', 'tiga', 'kami', 'kita', 'mereka', 'dia',
+			'ia', 'nya', 'anda', 'saya', 'kamu', 'kalian', 'apa', 'siapa', 'mengapa',
+			'bagaimana', 'dimana', 'kapan', 'seperti', 'banyak', 'sedikit', 'semua',
+			'beberapa', 'setiap', 'tiap', 'pun', 'lah', 'kah', 'pula', 'memang', 'justru',
+			'bahkan', 'apabila', 'sementara', 'selama', 'sejak', 'sekitar', 'kembali',
+			'terus', 'langsung', 'secara', 'melalui', 'tanpa', 'selain', 'baik', 'maupun',
+			'yg', 'dgn', 'dr', 'utk', 'krn', 'tsb', 'the', 'a', 'an', 'of', 'in', 'to', 'and',
+		);
+		$stopwords = array_fill_keys( $list, true );
+	}
+
+	return $stopwords;
 }
 
 /**

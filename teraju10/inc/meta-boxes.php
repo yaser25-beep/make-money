@@ -43,7 +43,7 @@ function teraju10_render_summary_box( $post ) {
 	<p>
 		<strong><?php esc_html_e( 'Satu poin inti per baris', 'teraju10' ); ?></strong>
 		&mdash;
-		<?php esc_html_e( 'tekan Enter untuk baris baru. Tulis 1-4 kalimat pendek yang MASING-MASING berdiri sendiri sebagai fakta/inti terpenting berita ini — gaya "Smart Brevity" yang dipakai Axios/Semafor, BUKAN satu paragraf panjang. Ini tampil sebagai ringkasan ber-bullet di atas artikel, dan paling sering dikutip AI Overview/Perplexity/ChatGPT. Kosongkan untuk memakai excerpt otomatis (kalau begitu, tampil sebagai satu kalimat biasa, bukan bullet).', 'teraju10' ); ?>
+		<?php esc_html_e( 'tekan Enter untuk baris baru. Tulis 1-4 kalimat pendek yang MASING-MASING berdiri sendiri sebagai fakta/inti terpenting berita ini — gaya "Smart Brevity" yang dipakai Axios/Semafor, BUKAN satu paragraf panjang. Ini tampil sebagai ringkasan ber-bullet di atas artikel, dan paling sering dikutip AI Overview/Perplexity/ChatGPT. SANGAT DISARANKAN diisi manual oleh redaksi (hasilnya selalu lebih baik) — kalau dikosongkan, tema mencoba menyusun poin otomatis dari isi artikel (bukan sekadar memotong paragraf pertama), tapi itu tetap tebakan mesin, bukan pengganti redaksi.', 'teraju10' ); ?>
 	</p>
 	<textarea
 		name="teraju10_summary"

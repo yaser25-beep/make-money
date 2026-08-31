@@ -48,10 +48,10 @@ while ( have_posts() ) :
 					<div class="byline-meta">
 						<a class="author" href="<?php echo esc_url( get_author_posts_url( $author_id ) ); ?>"><?php the_author(); ?></a>
 						<div class="dates">
-							<span><?php echo esc_html( sprintf( __( 'Diterbitkan %s', 'teraju10' ), get_the_date( 'j F Y, H.i' ) ) ); ?></span>
 							<?php if ( get_the_modified_date( 'U' ) > get_the_date( 'U' ) ) : ?>
-								<span class="rule"></span>
 								<span><?php echo esc_html( sprintf( __( 'Diperbarui %s', 'teraju10' ), get_the_modified_date( 'j F Y, H.i' ) ) ); ?></span>
+							<?php else : ?>
+								<span><?php echo esc_html( sprintf( __( 'Diterbitkan %s', 'teraju10' ), get_the_date( 'j F Y, H.i' ) ) ); ?></span>
 							<?php endif; ?>
 							<span class="rule"></span>
 							<span><?php echo esc_html( teraju10_reading_time( $post_id ) ); ?></span>

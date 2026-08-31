@@ -26,20 +26,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php endif; ?>
 
 <?php
-$redaksi_page = get_page_by_path( 'redaksi' );
-$has_english  = teraju10_category_exists( 'english-version' );
-$wa_number    = preg_replace( '/[^0-9]/', '', teraju10_get_option( 'wa_number' ) );
-$wa_message   = teraju10_get_option( 'wa_message' );
+$has_english = teraju10_category_exists( 'english-version' );
+$wa_number   = preg_replace( '/[^0-9]/', '', teraju10_get_option( 'wa_number' ) );
+$wa_message  = teraju10_get_option( 'wa_message' );
 
-if ( $redaksi_page || $has_english || $wa_number ) :
+if ( $has_english || $wa_number ) :
 	?>
 	<div class="utility-bar">
 		<div class="wrap">
 			<div class="links">
-				<?php if ( $redaksi_page ) : ?>
-					<a href="<?php echo esc_url( get_permalink( $redaksi_page ) ); ?>"><?php esc_html_e( 'Redaksi', 'teraju10' ); ?></a>
-				<?php endif; ?>
-
 				<?php if ( $has_english ) : ?>
 					<?php $english_cat = get_category_by_slug( 'english-version' ); ?>
 					<a href="<?php echo esc_url( get_category_link( $english_cat ) ); ?>"><?php esc_html_e( 'English version', 'teraju10' ); ?></a>

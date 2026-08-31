@@ -3,16 +3,57 @@
 
 	/*
 	 * Submenu dropdown di menu utama (mis. "Berita" > Daerah/Nasional/
-	 * Internasional). Buka otomatis lewat :hover/:focus-within di CSS untuk
-	 * mouse & keyboard; skrip ini hanya menambah tombol panah kecil supaya
-	 * bisa dibuka/ditutup dengan TAP di layar sentuh, karena :hover tidak
-	 * ada di perangkat sentuh.
+	 * Internasional). Menu tingkat atas memakai overflow-x:auto (geser
+	 * horizontal di layar sempit), dan overflow-x:auto itu otomatis membuat
+	 * overflow-y ikut "auto" juga — kalau dropdown-nya position:absolute,
+	 * dia akan ikut terpotong. Makanya dropdown di sini memakai
+	 * position:fixed (lolos dari clipping overflow leluhurnya) dengan
+	 * posisi (top/left) dihitung di sini lewat getBoundingClientRect(),
+	 * karena position:fixed tidak "nempel otomatis" di bawah induknya
+	 * seperti position:absolute.
+	 *
+	 * Dibuka lewat hover & fokus keyboard di desktop, dan tap tombol panah
+	 * di layar sentuh (karena :hover tidak ada di perangkat sentuh).
 	 */
 	var navParents = document.querySelectorAll( '.main-nav .menu-item-has-children' );
 	if ( navParents.length ) {
+		var closeAllSubmenus = function () {
+			navParents.forEach( function ( item ) {
+				item.classList.remove( 'is-open' );
+				var t = item.querySelector( '.submenu-toggle' );
+				if ( t ) {
+					t.setAttribute( 'aria-expanded', 'false' );
+				}
+			} );
+		};
+
+		var openSubmenu = function ( item, link, submenu, toggle ) {
+			closeAllSubmenus();
+
+			submenu.style.visibility = 'hidden';
+			item.classList.add( 'is-open' );
+
+			var linkRect = link.getBoundingClientRect();
+			var subWidth = submenu.offsetWidth;
+			var left     = linkRect.left;
+			var maxLeft  = window.innerWidth - subWidth - 8;
+			if ( left > maxLeft ) {
+				left = Math.max( 8, maxLeft );
+			}
+
+			submenu.style.top  = Math.round( linkRect.bottom ) + 'px';
+			submenu.style.left = Math.round( left ) + 'px';
+			submenu.style.visibility = '';
+
+			if ( toggle ) {
+				toggle.setAttribute( 'aria-expanded', 'true' );
+			}
+		};
+
 		navParents.forEach( function ( item ) {
 			var link = item.querySelector( ':scope > a' );
-			if ( ! link ) {
+			var submenu = item.querySelector( ':scope > .sub-menu' );
+			if ( ! link || ! submenu ) {
 				return;
 			}
 
@@ -24,26 +65,36 @@
 			toggle.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>';
 			link.insertAdjacentElement( 'afterend', toggle );
 
+			/* Mouse (desktop): hover induk membuka, keluar dari induk menutup —
+			   submenu tetap DOM anak dari item, jadi hover di atasnya tidak
+			   dianggap "keluar" walau posisinya fixed di layar. */
+			item.addEventListener( 'mouseenter', function () {
+				openSubmenu( item, link, submenu, toggle );
+			} );
+			item.addEventListener( 'mouseleave', closeAllSubmenus );
+
+			/* Keyboard: fokus ke link/tombol di dalam item membuka submenu,
+			   fokus keluar dari seluruh item (bukan cuma pindah antar anak
+			   di dalamnya) menutupnya lagi. */
+			item.addEventListener( 'focusin', function () {
+				openSubmenu( item, link, submenu, toggle );
+			} );
+			item.addEventListener( 'focusout', function ( e ) {
+				if ( ! item.contains( e.relatedTarget ) ) {
+					closeAllSubmenus();
+				}
+			} );
+
+			/* Sentuh: tap tombol panah untuk buka/tutup. */
 			toggle.addEventListener( 'click', function ( e ) {
 				e.stopPropagation();
-				var willOpen = ! item.classList.contains( 'is-open' );
-				closeAllSubmenus();
-				if ( willOpen ) {
-					item.classList.add( 'is-open' );
-					toggle.setAttribute( 'aria-expanded', 'true' );
+				if ( item.classList.contains( 'is-open' ) ) {
+					closeAllSubmenus();
+				} else {
+					openSubmenu( item, link, submenu, toggle );
 				}
 			} );
 		} );
-
-		var closeAllSubmenus = function () {
-			navParents.forEach( function ( item ) {
-				item.classList.remove( 'is-open' );
-				var t = item.querySelector( '.submenu-toggle' );
-				if ( t ) {
-					t.setAttribute( 'aria-expanded', 'false' );
-				}
-			} );
-		};
 
 		document.addEventListener( 'click', function ( e ) {
 			if ( ! e.target.closest( '.menu-item-has-children' ) ) {
@@ -56,6 +107,12 @@
 				closeAllSubmenus();
 			}
 		} );
+
+		window.addEventListener( 'resize', closeAllSubmenus );
+		var navList = document.querySelector( '.main-nav > .wrap > ul' );
+		if ( navList ) {
+			navList.addEventListener( 'scroll', closeAllSubmenus, { passive: true } );
+		}
 	}
 
 	/* Progress bar baca */

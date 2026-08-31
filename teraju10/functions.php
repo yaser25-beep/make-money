@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'TERAJU10_VERSION' ) ) {
-	define( 'TERAJU10_VERSION', '1.3.0' );
+	define( 'TERAJU10_VERSION', '1.4.0' );
 }
 
 /**
@@ -30,8 +30,8 @@ function teraju10_setup() {
 	add_theme_support(
 		'custom-logo',
 		array(
-			'height'      => 60,
-			'width'       => 200,
+			'height'      => 46,
+			'width'       => 154,
 			'flex-height' => true,
 			'flex-width'  => true,
 		)

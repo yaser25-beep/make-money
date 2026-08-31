@@ -4,7 +4,7 @@ Theme URI: https://teraju.id
 Author: teraju.id
 Author URI: https://teraju.id
 Description: Tema berita modern untuk teraju.id — ringan, sadar SEO/GEO/AEO, dengan sidebar widget yang bisa diatur penuh dari dashboard tanpa Elementor. Warna diambil dari identitas Kalimantan Barat: emas (tambang & harga Antam) dan teal sungai Kapuas.
-Version: 1.3.0
+Version: 1.4.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.8
@@ -67,21 +67,25 @@ button,input,textarea{font-family:inherit;color:inherit;}
 .utility-bar .links{display:flex;gap:20px;align-items:center;flex-wrap:wrap;}
 .utility-bar .links a:hover{color:var(--ink);}
 
-.site-header{padding:22px 0 0;}
-.header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-bottom:18px;flex-wrap:wrap;}
-.brand-mark{font-family:var(--font-display);font-weight:700;font-size:34px;letter-spacing:-.01em;line-height:1;}
+.site-header{padding:20px 0 0;}
+/* Logo + tagline jadi fokus tunggal, ditengahkan; tombol cari ditaruh
+   melayang di pojok kanan supaya tidak ikut mendorong logo ke kiri. */
+.header-row{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding-bottom:16px;}
+.site-logo img{max-height:46px;width:auto;}
+.brand-mark{font-family:var(--font-display);font-weight:700;font-size:28px;letter-spacing:-.01em;line-height:1;}
 .brand-mark span{color:var(--gold);}
-.brand-tagline{font-size:14px;color:var(--muted);margin-top:6px;}
-.search-btn{width:38px;height:38px;border:1px solid var(--line-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);flex-shrink:0;background:none;cursor:pointer;}
+.brand-tagline{font-size:14px;color:var(--muted);margin-top:4px;}
+.search-btn{position:absolute;top:0;right:24px;width:38px;height:38px;border:1px solid var(--line-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);flex-shrink:0;background:none;cursor:pointer;}
 
 nav.main-nav{border-top:1px solid var(--ink);border-bottom:1px solid var(--line);}
 nav.main-nav .wrap{padding-top:0;padding-bottom:0;}
-/* Hanya menu tingkat atas yang dibuat flex-wrap (bukan overflow-x:auto) —
-   ini sengaja, supaya submenu dropdown di bawah tidak ikut terpotong oleh
-   scroll container (overflow-x:auto memaksa overflow-y jadi auto juga,
-   yang akan memotong dropdown). Kalau item terlalu banyak, baris kedua
-   otomatis muncul, bukan scroll horizontal. */
-nav.main-nav > .wrap > ul{display:flex;flex-wrap:wrap;gap:6px 28px;list-style:none;padding:0;margin:0;}
+/* Satu baris, geser (slide) horizontal kalau item tidak muat — bukan
+   melipat ke baris kedua. Dropdown submenu memakai position:fixed (bukan
+   absolute) justru supaya TIDAK ikut terpotong oleh overflow-x:auto di
+   sini: overflow-x:auto otomatis membuat overflow-y ikut "auto" juga,
+   yang akan memotong dropdown kalau dropdown-nya position:absolute. */
+nav.main-nav > .wrap > ul{display:flex;gap:28px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;list-style:none;padding:0;margin:0;}
+nav.main-nav > .wrap > ul::-webkit-scrollbar{display:none;}
 nav.main-nav li{flex-shrink:0;}
 /* Item menu pertama (mis. "Berita"/Beranda) diberi jarak & garis pemisah
    dari daftar kategori setelahnya, pola umum nav situs media besar. */
@@ -90,18 +94,15 @@ nav.main-nav a{display:block;font-size:14px;font-weight:500;padding:13px 0;white
 nav.main-nav a:hover,nav.main-nav .current-menu-item a{border-bottom-color:var(--gold);}
 
 /* Submenu dropdown (mis. "Berita" > Daerah/Nasional/Internasional).
-   Terbuka lewat hover/fokus di desktop; di layar sentuh, main.js
-   menambahkan tombol panah kecil untuk toggle tap, karena :hover tidak
-   ada di perangkat sentuh. */
+   Dibuka/ditutup sepenuhnya lewat main.js (hover & fokus di desktop, tap
+   tombol panah di layar sentuh) yang juga menghitung posisi dropdown —
+   position:fixed tidak punya "nempel otomatis di bawah induk" ala
+   position:absolute, jadi posisinya perlu dihitung lewat JS. */
 nav.main-nav .menu-item-has-children{position:relative;display:flex;align-items:center;}
 nav.main-nav .submenu-toggle{background:none;border:none;color:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;margin-left:-2px;flex-shrink:0;}
 nav.main-nav .submenu-toggle svg{transition:transform .15s ease;}
 nav.main-nav .menu-item-has-children.is-open .submenu-toggle svg{transform:rotate(180deg);}
-nav.main-nav .sub-menu{position:absolute;top:100%;left:0;z-index:200;display:none;flex-direction:column;gap:0;min-width:200px;margin:0;padding:8px;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:0 12px 28px rgba(0,0,0,.14);}
-nav.main-nav .menu-item-has-children:last-child > .sub-menu,
-nav.main-nav .menu-item-has-children:nth-last-child(2) > .sub-menu{left:auto;right:0;}
-nav.main-nav .menu-item-has-children:hover > .sub-menu,
-nav.main-nav .menu-item-has-children:focus-within > .sub-menu,
+nav.main-nav .sub-menu{position:fixed;top:0;left:0;z-index:200;display:none;flex-direction:column;gap:0;min-width:200px;max-width:260px;margin:0;padding:8px;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:0 12px 28px rgba(0,0,0,.16);}
 nav.main-nav .menu-item-has-children.is-open > .sub-menu{display:flex;}
 nav.main-nav .sub-menu li{width:100%;}
 nav.main-nav .sub-menu a{padding:9px 12px;border-radius:6px;border-bottom:none;white-space:normal;}

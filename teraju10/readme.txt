@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.3.0
+Version: 1.4.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -125,6 +125,26 @@ updated) berlaku baik untuk nilai otomatis maupun manual.
   menggantikan garis pembatas — mengikuti gaya aplikasi berita modern
   (Google News, Apple News, BBC News) di layar sempit.
 
+== Perubahan v1.4.0 (penyempurnaan header, nav, byline, Ringkasan Cepat) ==
+- Menu utama mobile: dikembalikan jadi satu baris yang bisa digeser
+  (horizontal-scroll) kalau item tidak muat, bukan melipat ke baris kedua.
+  Dropdown "Berita" tetap berfungsi normal — teknis: dropdown-nya sekarang
+  memakai position:fixed dengan posisi dihitung oleh main.js, supaya tidak
+  ikut terpotong oleh scroll container (overflow-x:auto pada elemen induk
+  otomatis membuat overflow-y ikut "auto", yang akan memotong dropdown
+  kalau dropdown-nya masih position:absolute seperti versi sebelumnya).
+- Logo di header diperkecil dan logo+tagline sekarang ditengahkan; tombol
+  cari dipindah jadi ikon melayang di pojok kanan atas.
+- Utility bar atas kini hanya menampilkan "English version" dan "Kirim
+  Kabar Kalbar" — link "Redaksi" dihapus dari situ (halaman Redaksi tetap
+  bisa ditautkan lewat menu utama atau footer kalau perlu).
+- Artikel: kalau ada tanggal "Diperbarui", tanggal "Diterbitkan" tidak lagi
+  ditampilkan berdampingan — cukup salah satu, sesuai yang paling relevan.
+- Ringkasan Cepat: mesin ekstraksi otomatis (dipakai kalau kotaknya
+  dikosongkan redaksi) dirombak supaya benar-benar mengambil poin dari
+  SELURUH artikel, bukan cuma paragraf pembuka — lihat "Fitur AHA" nomor 3
+  di bawah untuk detail cara kerjanya.
+
 == Perubahan v1.3.0 (submenu dropdown & Ringkasan Cepat ala Smart Brevity) ==
 - Submenu dropdown: item menu yang punya sub-item (mis. "Berita" dengan
   anak menu Daerah/Nasional/Internasional) sekarang tampil sebagai dropdown
@@ -173,16 +193,33 @@ perlu mengubah kode.
    asisten suara (Google Assistant, dsb.) bisa membacakan ringkasan artikel
    dengan aman. Tidak menambah beban halaman sama sekali (hanya JSON-LD).
 
-3. Ringkasan Cepat ala Smart Brevity
-   Kotak "Ringkasan Cepat" di atas artikel sekarang berupa 1-4 poin fakta
-   inti ber-bullet (bukan satu paragraf basa-basi), gaya yang dipopulerkan
-   Axios dan ditiru Semafor/Politico Playbook — terbukti menaikkan angka
-   "baca sampai selesai" karena pembaca (dan AI Overview/Perplexity) bisa
-   langsung menangkap inti berita dalam 3 detik. Redaksi tinggal menulis
-   satu fakta terpenting per baris di kotak edit artikel; kalau cuma diisi
-   satu baris, otomatis tampil sebagai kalimat biasa (bukan bullet aneh
-   untuk satu poin). Sepenuhnya kompatibel dengan artikel lama yang sudah
-   ditulis satu paragraf.
+3. Ringkasan Cepat ala Smart Brevity + ekstraksi otomatis
+   Kotak "Ringkasan Cepat" di atas artikel berupa 1-4 poin fakta inti
+   ber-bullet (bukan satu paragraf basa-basi), gaya yang dipopulerkan Axios
+   dan ditiru Semafor/Politico Playbook — pembaca (dan AI Overview/
+   Perplexity) bisa langsung menangkap inti berita dalam 3 detik. Redaksi
+   tinggal menulis satu fakta terpenting per baris di kotak edit artikel.
+
+   Kalau kotak itu DIKOSONGKAN, tema tidak lagi sekadar memotong paragraf
+   pertama. Urutan yang dipakai:
+     1) Kotak Ringkasan Cepat (kalau diisi) — selalu prioritas utama.
+     2) Excerpt manual WordPress (kalau redaksi mengisi kotak Excerpt).
+     3) Ekstraksi otomatis dari ISI artikel: tiap kalimat diskor dari
+        seberapa sering kata-katanya muncul di seluruh artikel (dikurangi
+        stopword Bahasa Indonesia), lalu artikel dibagi jadi beberapa
+        "seksi" berurutan (awal/tengah/akhir) dan kalimat berskor
+        tertinggi dari TIAP seksi yang dipilih — supaya poinnya benar-benar
+        mewakili keseluruhan artikel, bukan cuma paragraf pembuka. Kalimat
+        yang isinya mirip satu sama lain otomatis dibuang salah satunya.
+     4) Excerpt otomatis WordPress (potongan kata pertama) sebagai jaring
+        pengaman paling akhir, kalau artikelnya terlalu pendek untuk (3).
+   Cara (3) tetap sekadar tebakan mesin berbasis statistik kata — bukan
+   pemahaman makna seperti AI generatif — jadi kotak Ringkasan Cepat manual
+   selalu dianjurkan untuk hasil terbaik. Tidak ada API pihak ketiga yang
+   dipanggil untuk ini, semuanya jalan di server sendiri (PHP murni).
+   Sepenuhnya kompatibel dengan artikel lama yang sudah ditulis satu
+   paragraf — tetap tampil sebagai kalimat biasa, bukan bullet aneh untuk
+   satu poin.
 
 == Batasan yang perlu diketahui ==
 - Tema ini adalah tema klasik (PHP template), bukan block theme/FSE.
