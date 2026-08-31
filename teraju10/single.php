@@ -20,13 +20,57 @@ while ( have_posts() ) :
 	$facts          = teraju10_get_facts( $post_id );
 	$summary_points = teraju10_get_summary_points( $post_id );
 	$categories     = get_the_category();
+
+	/*
+	 * Efek kesadaran Karhutla — kabut asap tipis + pesan singkat, khusus
+	 * momen karhutla musim ini. SEMENTARA: matikan lewat Appearance >
+	 * Customize > "Efek Kesadaran Karhutla" begitu musim hujan/karhutla
+	 * mereda, tidak perlu ubah kode sama sekali.
+	 */
+	$karhutla_active = '1' === teraju10_get_option( 'karhutla_smoke_effect' );
 	?>
+
+	<?php if ( $karhutla_active ) : ?>
+		<div class="karhutla-haze" aria-hidden="true"></div>
+	<?php endif; ?>
 
 	<main>
 		<div class="<?php echo esc_attr( $layout_class ); ?>">
 			<article <?php post_class( 'post-main' ); ?>>
 
 				<?php teraju10_breadcrumbs(); ?>
+
+				<?php if ( $karhutla_active ) : ?>
+					<?php
+					$karhutla_message = teraju10_get_option( 'karhutla_message' );
+					$karhutla_slug    = teraju10_get_option( 'karhutla_category' );
+					$karhutla_url     = '';
+
+					if ( $karhutla_slug ) {
+						$karhutla_term = get_category_by_slug( $karhutla_slug );
+						if ( ! $karhutla_term ) {
+							$karhutla_term = get_term_by( 'slug', $karhutla_slug, 'post_tag' );
+						}
+						if ( $karhutla_term ) {
+							$maybe_url = get_term_link( $karhutla_term );
+							if ( ! is_wp_error( $maybe_url ) ) {
+								$karhutla_url = $maybe_url;
+							}
+						}
+					}
+					?>
+					<?php if ( $karhutla_message ) : ?>
+						<div class="karhutla-banner">
+							<span class="karhutla-icon" aria-hidden="true">🌫️</span>
+							<p>
+								<?php echo esc_html( $karhutla_message ); ?>
+								<?php if ( $karhutla_url ) : ?>
+									<a href="<?php echo esc_url( $karhutla_url ); ?>"><?php esc_html_e( 'Baca liputan Karhutla', 'teraju10' ); ?></a>
+								<?php endif; ?>
+							</p>
+						</div>
+					<?php endif; ?>
+				<?php endif; ?>
 
 				<?php if ( ! empty( $categories ) ) : ?>
 					<a class="article-tag" href="<?php echo esc_url( get_category_link( $categories[0] ) ); ?>"><?php echo esc_html( $categories[0]->name ); ?></a>

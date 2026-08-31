@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.6.0
+Version: 1.7.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -157,6 +157,34 @@ bukan pengganti alat analitik.
 Widget ini masih bisa dipakai manual (isi ID artikel sendiri) lewat opsi
 "Manual" di pengaturan widget, kalau redaksi ingin mengatur urutannya
 sendiri untuk momen tertentu.
+
+== Efek Kesadaran Karhutla (SEMENTARA) ==
+Di halaman artikel (single post), ada efek kabut asap tipis + pesan
+kesadaran singkat — respons untuk musim karhutla tahun ini yang terparah
+dalam beberapa tahun terakhir di Kalimantan Barat. Diatur di Appearance >
+Customize > "Efek Kesadaran Karhutla":
+
+  - "Tampilkan efek kabut asap" (aktif secara default): centang/hilangkan
+    kapan pun untuk menampilkan/menghilangkan efeknya. Begitu musim hujan
+    tiba dan asap karhutla mereda, tinggal HILANGKAN CENTANG ini — efek
+    kabut & pesannya langsung hilang dari seluruh artikel, tanpa perlu
+    ubah kode atau upload ulang tema.
+  - "Pesan kesadaran": teks singkat yang tampil di kotak banner atas
+    artikel, bisa diedit bebas.
+  - "Slug kategori/tag liputan Karhutla" (opsional): kalau diisi dan
+    kategori/tag-nya ada di situs, banner-nya jadi tautan "Baca liputan
+    Karhutla" ke situ. Kalau kosong atau slug-nya belum ada, banner tetap
+    tampil sebagai teks biasa tanpa tautan — tidak pernah error.
+
+Catatan desain: efek kabut dibuat murni dekoratif (aria-hidden, tidak
+menghalangi klik/seleksi teks) dan terkonsentrasi di tepi atas halaman,
+bukan menutupi badan artikel, supaya keterbacaan tetap utuh. Otomatis
+nonaktif animasinya untuk pembaca yang mengaktifkan pengaturan "reduce
+motion" di perangkatnya. Warnanya menyesuaikan mode gelap/terang otomatis.
+
+== Perubahan v1.7.0 (Efek Kesadaran Karhutla) ==
+- Lihat "Efek Kesadaran Karhutla (SEMENTARA)" di atas untuk detail lengkap
+  dan cara mematikannya nanti.
 
 == Perubahan v1.6.0 (Postingan Terpopuler berbasis tayangan) ==
 - Lihat "Postingan Terpopuler: berdasar tayangan, bukan komentar lagi" di

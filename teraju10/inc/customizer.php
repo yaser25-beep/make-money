@@ -56,6 +56,22 @@ function teraju10_customizer_fields() {
 				'warisan_category'   => array( __( 'Slug kategori "Warisan Kalbar"', 'teraju10' ), 'kultur' ),
 			),
 		),
+		'teraju10_karhutla' => array(
+			'title'  => __( 'Efek Kesadaran Karhutla', 'teraju10' ),
+			'fields' => array(
+				'karhutla_smoke_effect' => array(
+					__( 'Tampilkan efek kabut asap', 'teraju10' ),
+					'1',
+					'checkbox',
+					__( 'Efek visual kabut asap tipis + pesan kesadaran di halaman artikel, untuk momen karhutla musim ini. Bersifat SEMENTARA — matikan centang ini kapan pun (mis. setelah musim hujan/karhutla mereda) untuk menghilangkannya sepenuhnya, tanpa perlu ubah kode.', 'teraju10' ),
+				),
+				'karhutla_message'      => array(
+					__( 'Pesan kesadaran', 'teraju10' ),
+					__( 'Kabut asap karhutla masih terjadi di sejumlah wilayah Kalimantan Barat musim ini — salah satu yang terparah dalam beberapa tahun terakhir.', 'teraju10' )
+				),
+				'karhutla_category'     => array( __( 'Slug kategori/tag liputan Karhutla (opsional)', 'teraju10' ), 'karhutla' ),
+			),
+		),
 	);
 }
 
