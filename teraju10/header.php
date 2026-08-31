@@ -14,16 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>
-/* Set tema gelap sebelum CSS dimuat, supaya tidak ada kedipan (FOUC). */
-(function(){
-	try {
-		if ( window.localStorage.getItem( 'teraju10-theme' ) === 'dark' ) {
-			document.documentElement.setAttribute( 'data-theme', 'dark' );
-		}
-	} catch ( e ) {}
-})();
-</script>
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -35,39 +25,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="progress-bar" id="progressBar"></div>
 <?php endif; ?>
 
-<div class="utility-bar">
-	<div class="wrap">
-		<span><?php echo esc_html( date_i18n( 'l, j F Y' ) ); ?></span>
-		<div class="links">
-			<?php
-			$redaksi_page = get_page_by_path( 'redaksi' );
-			if ( $redaksi_page ) :
-				?>
-				<a href="<?php echo esc_url( get_permalink( $redaksi_page ) ); ?>"><?php esc_html_e( 'Redaksi', 'teraju10' ); ?></a>
-				<?php
-			endif;
+<?php
+$redaksi_page = get_page_by_path( 'redaksi' );
+$has_english  = teraju10_category_exists( 'english-version' );
+$wa_number    = preg_replace( '/[^0-9]/', '', teraju10_get_option( 'wa_number' ) );
+$wa_message   = teraju10_get_option( 'wa_message' );
 
-			if ( teraju10_category_exists( 'english-version' ) ) :
-				$english_cat = get_category_by_slug( 'english-version' );
-				?>
-				<a href="<?php echo esc_url( get_category_link( $english_cat ) ); ?>"><?php esc_html_e( 'English version', 'teraju10' ); ?></a>
-				<?php
-			endif;
+if ( $redaksi_page || $has_english || $wa_number ) :
+	?>
+	<div class="utility-bar">
+		<div class="wrap">
+			<div class="links">
+				<?php if ( $redaksi_page ) : ?>
+					<a href="<?php echo esc_url( get_permalink( $redaksi_page ) ); ?>"><?php esc_html_e( 'Redaksi', 'teraju10' ); ?></a>
+				<?php endif; ?>
 
-			$wa_number  = preg_replace( '/[^0-9]/', '', teraju10_get_option( 'wa_number' ) );
-			$wa_message = teraju10_get_option( 'wa_message' );
-			if ( $wa_number ) :
-				?>
-				<a href="https://wa.me/<?php echo esc_attr( $wa_number ); ?>?text=<?php echo rawurlencode( $wa_message ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Kirim Kabar Kalbar', 'teraju10' ); ?></a>
-				<?php
-			endif;
-			?>
-			<button type="button" class="theme-toggle" data-label-dark="<?php esc_attr_e( 'Mode gelap', 'teraju10' ); ?>" data-label-light="<?php esc_attr_e( 'Mode terang', 'teraju10' ); ?>">
-				<?php esc_html_e( 'Mode gelap', 'teraju10' ); ?>
-			</button>
+				<?php if ( $has_english ) : ?>
+					<?php $english_cat = get_category_by_slug( 'english-version' ); ?>
+					<a href="<?php echo esc_url( get_category_link( $english_cat ) ); ?>"><?php esc_html_e( 'English version', 'teraju10' ); ?></a>
+				<?php endif; ?>
+
+				<?php if ( $wa_number ) : ?>
+					<a href="https://wa.me/<?php echo esc_attr( $wa_number ); ?>?text=<?php echo rawurlencode( $wa_message ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Kirim Kabar Kalbar', 'teraju10' ); ?></a>
+				<?php endif; ?>
+			</div>
 		</div>
 	</div>
-</div>
+	<?php
+endif;
+?>
 
 <header class="site-header">
 	<div class="wrap header-row">

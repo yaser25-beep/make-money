@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.1.0
+Version: 1.2.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -92,6 +92,23 @@ langganan data API berbayar), developer tinggal pakai filter:
 
 Filter yang sama ($key: gold_price, gold_change, usd_idr, usd_change,
 updated) berlaku baik untuk nilai otomatis maupun manual.
+
+== Perubahan v1.2.0 (perbaikan tampilan mobile & header) ==
+- Hero homepage (headline utama + daftar berita di sampingnya) diganti dari
+  CSS grid ke susunan blok biasa saat layar sempit (<=860px). Ini memperbaiki
+  bug di beberapa browser/WebView Android tempat headline besar bisa
+  bertumpuk (overlap) dengan daftar berita di bawahnya.
+- Header dirapikan: tanggal/hari dan tombol mode gelap-terang dibuang dari
+  utility bar. Mode gelap/terang tetap jalan otomatis mengikuti pengaturan
+  perangkat pembaca (prefers-color-scheme), tanpa perlu tombol manual —
+  bar utilitas juga otomatis tersembunyi kalau tidak ada isinya sama sekali.
+- Menu utama: item pertama (biasanya "Berita"/Beranda) sekarang punya jarak
+  dan garis pemisah dari kategori lain di sebelahnya, pola umum di nav
+  situs media besar (Home dipisah dari daftar rubrik).
+- Versi mobile: kartu berita per kategori (Otomotif, Politik, dst.) memakai
+  jarak antar-kartu yang lebih lega dan thumbnail bersudut rounded,
+  menggantikan garis pembatas — mengikuti gaya aplikasi berita modern
+  (Google News, Apple News, BBC News) di layar sempit.
 
 == Fitur AHA (ringan, jarang dipakai portal lokal) ==
 
