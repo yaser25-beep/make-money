@@ -1,6 +1,14 @@
 (function () {
 	'use strict';
 
+	/* Video asap Karhutla: hormati preferensi "reduce motion" pembaca —
+	   video tetap tampil (masih menyampaikan pesan lewat gambar diam di
+	   frame pertama), cuma tidak diputar/loop terus-menerus. */
+	var smokeVideo = document.getElementById( 'karhutlaSmokeVideo' );
+	if ( smokeVideo && window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches ) {
+		smokeVideo.pause();
+	}
+
 	/*
 	 * Submenu dropdown di menu utama (mis. "Berita" > Daerah/Nasional/
 	 * Internasional). Menu tingkat atas memakai overflow-x:auto (geser

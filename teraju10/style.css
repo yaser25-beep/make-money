@@ -4,7 +4,7 @@ Theme URI: https://teraju.id
 Author: teraju.id
 Author URI: https://teraju.id
 Description: Tema berita modern untuk teraju.id — ringan, sadar SEO/GEO/AEO, dengan sidebar widget yang bisa diatur penuh dari dashboard tanpa Elementor. Warna diambil dari identitas Kalimantan Barat: emas (tambang & harga Antam) dan teal sungai Kapuas.
-Version: 1.7.0
+Version: 1.8.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.8
@@ -275,34 +275,39 @@ h1.headline{font-family:var(--font-display);font-size:40px;font-weight:600;line-
 .related{padding:44px 0 60px;background:var(--surface);border-top:1px solid var(--line);margin-top:20px;}
 .related h2{font-family:var(--font-display);font-size:22px;font-weight:600;border-bottom:1px solid var(--ink);padding-bottom:10px;margin:0 0 22px;}
 
-/* Efek kesadaran Karhutla — kabut asap tipis + pesan singkat, khusus momen
+/* Efek kesadaran Karhutla — video asap asli yang di-loop, khusus momen
    karhutla musim ini. SEMENTARA: matikan lewat Appearance > Customize >
    "Efek Kesadaran Karhutla" begitu musim hujan/karhutla mereda. Murni
    dekoratif (aria-hidden, pointer-events:none) — tidak pernah menghalangi
-   klik atau bacaan, dan terkonsentrasi di tepi atas halaman, bukan
-   menutupi badan artikel. */
+   klik atau bacaan. File video sudah dikompres (~100-135KB, lihat
+   assets/video/) supaya loading halaman tetap ringan. Zona ~60% tinggi
+   layar dengan fade lembut di tepi atas (mask-image) supaya menyatu ke
+   halaman, bukan seperti "kotak video" yang ditempel. */
 .karhutla-haze{
   position:fixed;
-  inset:0;
+  left:0; right:0; bottom:0;
+  height:60vh;
   z-index:2;
   pointer-events:none;
-  opacity:.5;
-  mix-blend-mode:multiply;
-  background:
-    radial-gradient(ellipse 55% 38% at 10% -5%, rgba(138,120,90,.4), transparent 62%),
-    radial-gradient(ellipse 48% 32% at 92% 0%, rgba(150,128,92,.32), transparent 65%),
-    radial-gradient(ellipse 70% 26% at 50% -8%, rgba(168,146,112,.22), transparent 72%);
-  animation: karhutla-drift 30s ease-in-out infinite alternate;
+  overflow:hidden;
+  opacity:.85;
+  -webkit-mask-image:linear-gradient(to top, black 55%, transparent 100%);
+  mask-image:linear-gradient(to top, black 55%, transparent 100%);
 }
-@keyframes karhutla-drift{
-  0%   { transform:translate(-1.5%, 0); }
-  100% { transform:translate(1.5%, 1%); }
+.karhutla-haze video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center bottom;
+  display:block;
+  filter:saturate(.9);
 }
 @media (prefers-color-scheme: dark){
-  .karhutla-haze{ mix-blend-mode:screen; opacity:.28; }
+  .karhutla-haze{ opacity:.6; }
+  .karhutla-haze video{ filter:saturate(.85) brightness(.72); }
 }
 @media (prefers-reduced-motion: reduce){
-  .karhutla-haze{ animation:none; }
+  .karhutla-haze{ opacity:.5; }
 }
 
 .karhutla-banner{display:flex;gap:12px;align-items:flex-start;background:var(--gold-tint);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:14px 18px;margin-bottom:22px;}

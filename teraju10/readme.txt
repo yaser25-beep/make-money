@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.7.0
+Version: 1.8.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -176,11 +176,33 @@ Customize > "Efek Kesadaran Karhutla":
     Karhutla" ke situ. Kalau kosong atau slug-nya belum ada, banner tetap
     tampil sebagai teks biasa tanpa tautan — tidak pernah error.
 
-Catatan desain: efek kabut dibuat murni dekoratif (aria-hidden, tidak
-menghalangi klik/seleksi teks) dan terkonsentrasi di tepi atas halaman,
-bukan menutupi badan artikel, supaya keterbacaan tetap utuh. Otomatis
-nonaktif animasinya untuk pembaca yang mengaktifkan pengaturan "reduce
-motion" di perangkatnya. Warnanya menyesuaikan mode gelap/terang otomatis.
+Sejak v1.8.0, efeknya memakai VIDEO asap sungguhan (bukan animasi CSS),
+di-loop otomatis (muted, tanpa suara) — file-nya ada di
+assets/video/karhutla-smoke.webm (utama, ~100KB) dan
+assets/video/karhutla-smoke.mp4 (cadangan untuk Safari lama, ~135KB).
+Videonya sudah dikompres dari sumber asli ~980KB tanpa penurunan kualitas
+yang kentara, supaya loading halaman tetap ringan. Zona efeknya ~60% tinggi
+layar dengan fade lembut di tepi atas (menyatu ke halaman, bukan seperti
+kotak video yang ditempel).
+
+Mau ganti videonya? Tinggal timpa kedua file itu (nama & lokasi file harus
+sama) dengan video lain — idealnya video pendek (2-6 detik), sudah
+dikompres kecil (dioptimalkan lewat ffmpeg atau tool serupa: turunkan
+resolusi ke ~640px lebar, hapus audio, gunakan codec H.264 untuk .mp4 dan
+VP9 untuk .webm), supaya tetap ringan.
+
+Catatan desain: efek video dibuat murni dekoratif (aria-hidden,
+pointer-events:none — tidak pernah menghalangi klik/seleksi teks) dan
+terkonsentrasi di zona bawah halaman, dengan fade di tepi atas supaya
+keterbacaan bagian lain artikel tetap utuh. Otomatis berhenti diputar
+(bukan cuma diam di background) untuk pembaca yang mengaktifkan pengaturan
+"reduce motion" di perangkatnya. Kecerahannya disesuaikan otomatis di mode
+gelap supaya tidak menyilaukan.
+
+== Perubahan v1.8.0 (efek asap pakai video asli) ==
+- Efek Kesadaran Karhutla diganti dari animasi CSS jadi video asap
+  sungguhan yang di-loop — lihat "Efek Kesadaran Karhutla (SEMENTARA)" di
+  atas untuk detail lengkap, termasuk cara mengganti videonya nanti.
 
 == Perubahan v1.7.0 (Efek Kesadaran Karhutla) ==
 - Lihat "Efek Kesadaran Karhutla (SEMENTARA)" di atas untuk detail lengkap
@@ -387,4 +409,5 @@ teraju10/
   assets/js/main.js       -> dropdown menu, progress bar, simpan, bagikan
   assets/js/quote-share.js -> toolbar "kutip & bagikan" (hanya di artikel)
   assets/js/view-tracker.js -> lapor tayangan artikel (ramah cache, lihat atas)
+  assets/video/karhutla-smoke.webm/.mp4 -> video efek asap (lihat Efek Kesadaran Karhutla)
   assets/js/admin-widgets.js -> tombol upload gambar di widget Slot Iklan

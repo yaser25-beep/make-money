@@ -31,7 +31,12 @@ while ( have_posts() ) :
 	?>
 
 	<?php if ( $karhutla_active ) : ?>
-		<div class="karhutla-haze" aria-hidden="true"></div>
+		<div class="karhutla-haze" aria-hidden="true">
+			<video id="karhutlaSmokeVideo" autoplay muted loop playsinline preload="auto">
+				<source src="<?php echo esc_url( get_template_directory_uri() . '/assets/video/karhutla-smoke.webm' ); ?>" type="video/webm">
+				<source src="<?php echo esc_url( get_template_directory_uri() . '/assets/video/karhutla-smoke.mp4' ); ?>" type="video/mp4">
+			</video>
+		</div>
 	<?php endif; ?>
 
 	<main>
