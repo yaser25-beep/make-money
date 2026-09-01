@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.10.0
+Version: 1.11.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -60,6 +60,8 @@ atau plugin page builder.
      terus tampil di slot itu, tidak tergeser artikel baru lain di
      kategori yang sama — cocok untuk artikel semacam "Siapa Sultan Hamid
      II" yang ingin terus jadi sorotan homepage.
+   - AdSense / Iklan: lihat "Cara pasang AdSense" di bawah untuk detail
+     lengkap.
 
 5. Setiap kali menulis artikel baru (halaman edit artikel)
    - Kotak "Ringkasan Cepat": tulis SATU POIN INTI PER BARIS (Enter untuk
@@ -80,6 +82,39 @@ atau plugin page builder.
        Kawasan dengan kenaikan tertinggi|Pontianak Selatan
    - Isi juga bio penulis lewat Users > Profil > Biographical Info, supaya
      kartu penulis di bawah artikel tidak kosong.
+
+== Cara pasang AdSense ==
+Sejak versi 1.11.0, kode AdSense diisi lewat Appearance > Customize >
+"AdSense / Iklan" — tidak perlu edit file tema atau pasang plugin lain:
+
+  1. Buka dashboard Google AdSense, ambil kode "Auto ads" (Ads > By site,
+     bentuknya <script async src="...adsbygoogle.js?client=ca-pub-XXXX"...>)
+     lalu tempel ke field "Kode AdSense global (di <head>)". Kode ini
+     otomatis muncul di <head> setiap halaman situs.
+  2. (Opsional, disarankan) Buat unit iklan "In-article" di AdSense (Ads >
+     By ad unit > In-article ad), lalu tempel kodenya ke field "Kode unit
+     iklan in-article". Tema otomatis menyisipkannya setelah paragraf ke-3
+     pada halaman artikel — posisi standar media besar karena tak
+     mengganggu awal bacaan tapi tetap terlihat saat pembaca scroll. Iklan
+     ini HANYA muncul di artikel yang cukup panjang (lebih dari 6 paragraf)
+     supaya tidak nempel aneh di artikel pendek.
+  3. Centang "Aktifkan iklan AdSense" untuk menyalakan keduanya. Centang ini
+     sengaja terpisah dari isi kode, supaya iklan bisa dimatikan sementara
+     (mis. saat submit ulang review AdSense) tanpa perlu menghapus kode
+     yang sudah ditempel.
+
+Selain dua slot di atas, sidebar artikel sudah punya widget terpisah
+"Teraju: Slot Iklan / Gambar" (Appearance > Widgets > Sidebar Artikel) untuk
+kode iklan/gambar promosi lain di luar AdSense, mis. iklan langsung/banner
+sponsor — tidak berkaitan dengan pengaturan AdSense di atas.
+
+== Font isi artikel: Lora (gaya The Guardian) ==
+Sejak versi 1.11.0, isi artikel (bukan judul/menu) memakai font serif Lora,
+mengikuti gaya media seperti The Guardian yang memakai serif khusus untuk
+badan teks demi kenyamanan baca artikel panjang — judul, menu, dan kutipan
+tetap memakai Fraunces seperti sebelumnya supaya kontras display/body-nya
+tetap terjaga. Font ini HANYA dimuat di halaman artikel tunggal (bukan di
+homepage/arsip), supaya halaman lain tetap seringan sebelumnya.
 
 == Ticker harga otomatis ==
 Sejak versi 1.1.0, ticker emas & USD/IDR diperbarui sendiri lewat WP-Cron,
@@ -204,6 +239,13 @@ keterbacaan bagian lain artikel tetap utuh. Otomatis berhenti diputar
 (bukan cuma diam di background) untuk pembaca yang mengaktifkan pengaturan
 "reduce motion" di perangkatnya. Kecerahannya disesuaikan otomatis di mode
 gelap supaya tidak menyilaukan.
+
+== Perubahan v1.11.0 (AdSense + font artikel Lora) ==
+- Integrasi Google AdSense lewat Customizer (section baru "AdSense / Iklan")
+  — kode global (<head>) dan kode in-article yang otomatis disisipkan
+  setelah paragraf ke-3. Lihat "Cara pasang AdSense" di atas.
+- Font isi artikel diganti jadi Lora (serif), gaya The Guardian, khusus di
+  halaman artikel tunggal — lihat "Font isi artikel: Lora" di atas.
 
 == Perubahan v1.10.0 (Ringkasan Cepat & Fakta Cepat kebuka ke REST API) ==
 - Field "Ringkasan Cepat" (_teraju_summary) dan "Fakta Cepat" (_teraju_facts)

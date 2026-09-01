@@ -62,6 +62,29 @@ function teraju10_customizer_fields() {
 				),
 			),
 		),
+		'teraju10_adsense'  => array(
+			'title'  => __( 'AdSense / Iklan', 'teraju10' ),
+			'fields' => array(
+				'adsense_enable'          => array(
+					__( 'Aktifkan iklan AdSense', 'teraju10' ),
+					'0',
+					'checkbox',
+					__( 'Centang setelah dua kode di bawah sudah diisi dan situs sudah disetujui Google AdSense. Bisa dimatikan lagi kapan pun tanpa perlu menghapus kodenya.', 'teraju10' ),
+				),
+				'adsense_head_code'       => array(
+					__( 'Kode AdSense global (di <head>)', 'teraju10' ),
+					'',
+					'textarea_code',
+					__( 'Tempel kode "Auto ads" dari dashboard AdSense (Ads > By site > kode <script async src="...adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"...>) atau kode verifikasi situs. Tampil di <head> setiap halaman.', 'teraju10' ),
+				),
+				'adsense_in_article_code' => array(
+					__( 'Kode unit iklan in-article', 'teraju10' ),
+					'',
+					'textarea_code',
+					__( 'Tempel kode unit iklan "In-article" dari AdSense (Ads > By ad unit > In-article ad, biasanya berupa tag <ins class="adsbygoogle">...). Otomatis disisipkan setelah paragraf ke-3 pada halaman artikel — posisi umum yang dipakai media besar karena tak mengganggu awal bacaan tapi tetap terlihat saat scroll. Iklan hanya muncul kalau artikel cukup panjang (>6 paragraf).', 'teraju10' ),
+				),
+			),
+		),
 		'teraju10_karhutla' => array(
 			'title'  => __( 'Efek Kesadaran Karhutla', 'teraju10' ),
 			'fields' => array(
@@ -102,11 +125,22 @@ function teraju10_customize_register( $wp_customize ) {
 			$type        = isset( $field[2] ) ? $field[2] : 'text';
 			$description = isset( $field[3] ) ? $field[3] : '';
 
+			if ( 'checkbox' === $type ) {
+				$sanitize_callback = 'teraju10_sanitize_checkbox';
+			} elseif ( 'textarea_code' === $type ) {
+				// Field khusus kode iklan/tracking (mis. AdSense) yang boleh berisi tag <script>.
+				// Hanya user dengan izin edit_theme_options yang bisa mengisi Customizer, jadi
+				// disimpan apa adanya — sanitize_text_field akan merusak tag <script>/<ins>.
+				$sanitize_callback = 'teraju10_sanitize_code_snippet';
+			} else {
+				$sanitize_callback = 'sanitize_text_field';
+			}
+
 			$wp_customize->add_setting(
 				$setting_id,
 				array(
 					'default'           => $default,
-					'sanitize_callback' => 'checkbox' === $type ? 'teraju10_sanitize_checkbox' : 'sanitize_text_field',
+					'sanitize_callback' => $sanitize_callback,
 					'transport'         => 'refresh',
 				)
 			);
@@ -114,7 +148,7 @@ function teraju10_customize_register( $wp_customize ) {
 			$control_args = array(
 				'label'   => $label,
 				'section' => $section_id,
-				'type'    => $type,
+				'type'    => 'textarea_code' === $type ? 'textarea' : $type,
 			);
 			if ( $description ) {
 				$control_args['description'] = $description;
@@ -151,4 +185,16 @@ function teraju10_get_option( $setting_id ) {
  */
 function teraju10_sanitize_checkbox( $value ) {
 	return ( true === $value || 1 === $value || '1' === $value ) ? '1' : '0';
+}
+
+/**
+ * "Sanitasi" untuk field kode iklan/tracking (mis. AdSense) — cuma di-trim,
+ * TIDAK di-strip tag-nya, supaya <script>/<ins> dari AdSense tidak rusak.
+ * Aman karena field ini cuma bisa diisi user dengan izin edit_theme_options.
+ *
+ * @param mixed $value Nilai mentah dari form.
+ * @return string
+ */
+function teraju10_sanitize_code_snippet( $value ) {
+	return is_string( $value ) ? trim( $value ) : '';
 }

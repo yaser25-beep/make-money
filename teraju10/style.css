@@ -4,7 +4,7 @@ Theme URI: https://teraju.id
 Author: teraju.id
 Author URI: https://teraju.id
 Description: Tema berita modern untuk teraju.id — ringan, sadar SEO/GEO/AEO, dengan sidebar widget yang bisa diatur penuh dari dashboard tanpa Elementor. Warna diambil dari identitas Kalimantan Barat: emas (tambang & harga Antam) dan teal sungai Kapuas.
-Version: 1.10.0
+Version: 1.11.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.8
@@ -23,6 +23,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
   --gold:#AD7C2C; --gold-deep:#7C591F; --gold-tint:#F3E9D4;
   --river:#1E4948; --river-deep:#123130; --river-tint:#E4EDEC;
   --font-display:'Fraunces',serif; --font-body:'Work Sans',sans-serif;
+  --font-article:'Lora','Fraunces',Georgia,serif;
   --danger:#B23B3B;
   color-scheme: light;
 }
@@ -227,8 +228,9 @@ h1.headline{font-family:var(--font-display);font-size:40px;font-weight:600;line-
 .hero-image img{width:100%;height:100%;object-fit:cover;}
 .caption{font-size:12px;color:var(--muted);margin-bottom:32px;}
 
-.article-body{font-size:18px;line-height:1.7;color:var(--ink-soft);}
+.article-body{font-family:var(--font-article);font-size:19px;line-height:1.68;color:var(--ink-soft);}
 .article-body p{margin:0 0 22px;max-width:66ch;}
+.article-body strong{font-weight:600;}
 .article-body h2{font-family:var(--font-display);font-size:24px;font-weight:600;margin:34px 0 16px;color:var(--ink);}
 .article-body h3{font-family:var(--font-display);font-size:20px;font-weight:600;margin:28px 0 14px;color:var(--ink);}
 .article-body ul,.article-body ol{margin:0 0 22px;padding-left:22px;max-width:66ch;}
@@ -238,6 +240,8 @@ h1.headline{font-family:var(--font-display);font-size:40px;font-weight:600;line-
 .article-body blockquote{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:26px;line-height:1.4;color:var(--ink);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0;margin:34px 0;max-width:56ch;}
 .article-body blockquote p{margin:0;}
 .article-body blockquote cite{display:block;font-family:var(--font-body);font-style:normal;font-size:13px;color:var(--muted);margin-top:12px;}
+.in-article-ad{margin:32px 0;text-align:center;}
+.in-article-ad::before{content:"Iklan";display:block;font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
 
 .fact-box{background:var(--river-tint);border-radius:6px;padding:22px 26px;margin:30px 0;max-width:66ch;}
 .fact-box .label{font-size:13px;font-weight:600;color:var(--river);margin-bottom:12px;}

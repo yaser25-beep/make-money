@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'TERAJU10_VERSION' ) ) {
-	define( 'TERAJU10_VERSION', '1.10.0' );
+	define( 'TERAJU10_VERSION', '1.11.0' );
 }
 
 /**
@@ -142,6 +142,15 @@ function teraju10_scripts() {
 	wp_enqueue_script( 'teraju10-main', get_template_directory_uri() . '/assets/js/main.js', array(), TERAJU10_VERSION, true );
 
 	if ( is_singular( 'post' ) ) {
+		// Font serif untuk isi artikel (gaya The Guardian) — cuma dimuat di halaman
+		// artikel, bukan di semua halaman, supaya homepage/arsip tetap seringan mungkin.
+		wp_enqueue_style(
+			'teraju10-fonts-article',
+			'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&display=swap',
+			array(),
+			null
+		);
+
 		wp_enqueue_script( 'teraju10-quote-share', get_template_directory_uri() . '/assets/js/quote-share.js', array(), TERAJU10_VERSION, true );
 		wp_localize_script(
 			'teraju10-quote-share',
@@ -220,3 +229,4 @@ require get_template_directory() . '/inc/view-counter.php';
 require get_template_directory() . '/inc/widgets.php';
 require get_template_directory() . '/inc/price-ticker.php';
 require get_template_directory() . '/inc/seo-meta.php';
+require get_template_directory() . '/inc/adsense.php';
