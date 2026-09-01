@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'TERAJU10_VERSION' ) ) {
-	define( 'TERAJU10_VERSION', '1.9.0' );
+	define( 'TERAJU10_VERSION', '1.10.0' );
 }
 
 /**

@@ -10,6 +10,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Daftarkan _teraju_summary dan _teraju_facts ke REST API, supaya bisa
+ * dibaca/ditulis otomasi (n8n dkk) lewat /wp-json/wp/v2/posts tanpa perlu
+ * plugin tambahan.
+ */
+function teraju10_register_post_meta() {
+	register_post_meta(
+		'post',
+		'_teraju_summary',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'sanitize_textarea_field',
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+
+	register_post_meta(
+		'post',
+		'_teraju_facts',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'sanitize_textarea_field',
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+}
+add_action( 'init', 'teraju10_register_post_meta' );
+
 function teraju10_add_meta_boxes() {
 	add_meta_box(
 		'teraju10_summary',

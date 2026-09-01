@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.9.0
+Version: 1.10.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -204,6 +204,15 @@ keterbacaan bagian lain artikel tetap utuh. Otomatis berhenti diputar
 (bukan cuma diam di background) untuk pembaca yang mengaktifkan pengaturan
 "reduce motion" di perangkatnya. Kecerahannya disesuaikan otomatis di mode
 gelap supaya tidak menyilaukan.
+
+== Perubahan v1.10.0 (Ringkasan Cepat & Fakta Cepat kebuka ke REST API) ==
+- Field "Ringkasan Cepat" (_teraju_summary) dan "Fakta Cepat" (_teraju_facts)
+  sekarang didaftarkan ke REST API WordPress (register_post_meta, show_in_rest).
+  Sebelumnya field ini cuma bisa diisi manual lewat wp-admin; sekarang otomasi
+  (mis. workflow n8n yang publish artikel lewat /wp-json/wp/v2/posts) bisa ikut
+  mengisi field "meta" ini langsung saat artikel dibuat/diupdate, tanpa perlu
+  buka wp-admin. Butuh user yang punya izin edit_posts (Application Password)
+  di sisi otomasi.
 
 == Perubahan v1.9.0 (pin artikel Warisan Kalbar) ==
 - Slot "Warisan Kalbar" di homepage sekarang bisa dikunci ke satu artikel
