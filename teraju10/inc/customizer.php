@@ -54,6 +54,12 @@ function teraju10_customizer_fields() {
 				'rubric_1_category'  => array( __( 'Slug kategori Rubrik 1', 'teraju10' ), 'otomotif' ),
 				'rubric_2_category'  => array( __( 'Slug kategori Rubrik 2', 'teraju10' ), 'politik' ),
 				'warisan_category'   => array( __( 'Slug kategori "Warisan Kalbar"', 'teraju10' ), 'kultur' ),
+				'warisan_pinned_id'  => array(
+					__( 'ID artikel "Warisan Kalbar" yang di-pin (opsional)', 'teraju10' ),
+					'',
+					'text',
+					__( 'Kosongkan untuk perilaku lama (otomatis tampilkan artikel TERBARU dari kategori di atas). Isi dengan ID artikel (lihat di URL wp-admin saat mengedit artikel, mis. post.php?post=1234) untuk MENGUNCI satu artikel tertentu di slot ini — dia tidak akan tergeser walau ada artikel baru lain di kategori yang sama. Cocok untuk artikel liputan mendalam/pilar yang ingin terus tampil. Kalau ID yang diisi tidak valid/sudah dihapus, otomatis kembali ke perilaku lama.', 'teraju10' ),
+				),
 			),
 		),
 		'teraju10_karhutla' => array(

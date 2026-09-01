@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.8.0
+Version: 1.9.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -54,6 +54,12 @@ atau plugin page builder.
      situs (default: otomotif, politik, kultur, dan tag komunitas untuk
      Kabar Kalbar). Kalau slug salah ketik, bagian itu otomatis
      disembunyikan, bukan error.
+   - "ID artikel Warisan Kalbar yang di-pin": kosongkan untuk perilaku lama
+     (tampil artikel TERBARU dari kategori Warisan Kalbar). Isi dengan ID
+     artikel untuk MENGUNCI satu artikel liputan mendalam/pilar supaya
+     terus tampil di slot itu, tidak tergeser artikel baru lain di
+     kategori yang sama — cocok untuk artikel semacam "Siapa Sultan Hamid
+     II" yang ingin terus jadi sorotan homepage.
 
 5. Setiap kali menulis artikel baru (halaman edit artikel)
    - Kotak "Ringkasan Cepat": tulis SATU POIN INTI PER BARIS (Enter untuk
@@ -198,6 +204,14 @@ keterbacaan bagian lain artikel tetap utuh. Otomatis berhenti diputar
 (bukan cuma diam di background) untuk pembaca yang mengaktifkan pengaturan
 "reduce motion" di perangkatnya. Kecerahannya disesuaikan otomatis di mode
 gelap supaya tidak menyilaukan.
+
+== Perubahan v1.9.0 (pin artikel Warisan Kalbar) ==
+- Slot "Warisan Kalbar" di homepage sekarang bisa dikunci ke satu artikel
+  tertentu (Appearance > Customize > Rubrik Homepage > "ID artikel Warisan
+  Kalbar yang di-pin"), supaya artikel liputan mendalam/pilar (mis. "Siapa
+  Sultan Hamid II") bisa terus jadi sorotan homepage tanpa tergeser artikel
+  baru lain di kategori yang sama. Kosongkan field-nya untuk kembali ke
+  perilaku lama (otomatis artikel terbaru di kategori).
 
 == Perubahan v1.8.0 (efek asap pakai video asli) ==
 - Efek Kesadaran Karhutla diganti dari animasi CSS jadi video asap

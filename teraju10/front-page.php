@@ -152,8 +152,23 @@ get_header();
 	?>
 
 	<?php
-	$warisan_slug = teraju10_get_option( 'warisan_category' );
-	if ( teraju10_category_exists( $warisan_slug ) ) :
+	$warisan_slug      = teraju10_get_option( 'warisan_category' );
+	$warisan_pinned_id = absint( teraju10_get_option( 'warisan_pinned_id' ) );
+
+	if ( $warisan_pinned_id ) {
+		/* Artikel di-pin lewat Customizer (mis. liputan mendalam/pilar) —
+		   dia yang tampil, bukan artikel terbaru di kategori. Query pakai
+		   post_status=publish supaya ID yang salah ketik/artikel yang
+		   dihapus tidak pernah menampilkan draft/konten tak sengaja. */
+		$warisan_query = new WP_Query(
+			array(
+				'post_type'      => 'post',
+				'post_status'    => 'publish',
+				'p'              => $warisan_pinned_id,
+				'posts_per_page' => 1,
+			)
+		);
+	} elseif ( teraju10_category_exists( $warisan_slug ) ) {
 		$warisan_query = new WP_Query(
 			array(
 				'post_type'      => 'post',
@@ -161,6 +176,11 @@ get_header();
 				'posts_per_page' => 1,
 			)
 		);
+	} else {
+		$warisan_query = null;
+	}
+
+	if ( $warisan_query ) :
 		if ( $warisan_query->have_posts() ) :
 			$warisan_query->the_post();
 			?>
