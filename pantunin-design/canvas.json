@@ -1,13 +1,15 @@
 {
   "artboards": [
-    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1440, "h": 5200 },
-    { "file": "Mobile.dc.html", "x": 1560, "y": 0, "w": 390, "h": 6300 },
-    { "file": "Arena.dc.html", "x": 2080, "y": 0, "w": 1200, "h": 900 }
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1440, "h": 5560 },
+    { "file": "Mobile.dc.html", "x": 1572, "y": -12, "w": 390, "h": 6900 },
+    { "file": "Arena.dc.html", "x": 2080, "y": 0, "w": 1200, "h": 900 },
+    { "file": "Festival.dc.html", "x": 3400, "y": 0, "w": 1440, "h": 3700 }
   ],
   "annotations": [
     { "id": "note-main", "x": 0, "y": -90, "w": 320, "text": "Homepage Desktop" },
     { "id": "note-mobile", "x": 1560, "y": -90, "w": 260, "text": "Homepage Mobile" },
-    { "id": "note-arena", "x": 2080, "y": -90, "w": 320, "text": "Detail interaksi: Arena Balas Pantun" }
+    { "id": "note-arena", "x": 2080, "y": -90, "w": 320, "text": "Detail interaksi: Arena Balas Pantun" },
+    { "id": "note-festival", "x": 3400, "y": -90, "w": 380, "text": "Halaman Program: Festival Pontianak Berpantun (didukung Dana Indonesia Raya)" }
   ],
   "launch": { "view": "canvas" }
 }
