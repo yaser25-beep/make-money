@@ -4,7 +4,7 @@ Theme URI: https://teraju.id
 Author: teraju.id
 Author URI: https://teraju.id
 Description: Tema berita modern untuk teraju.id — ringan, sadar SEO/GEO/AEO, dengan sidebar widget yang bisa diatur penuh dari dashboard tanpa Elementor. Warna diambil dari identitas Kalimantan Barat: emas (tambang & harga Antam) dan teal sungai Kapuas.
-Version: 1.13.0
+Version: 1.13.1
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.8
@@ -404,6 +404,15 @@ footer.site-footer{border-top:1px solid var(--ink);padding:40px 0 30px;margin-to
   .feature-warisan .fw-text{padding:28px 24px;}
   .footer-grid{grid-template-columns:1fr 1fr;}
   .english-teaser{flex-direction:column;align-items:flex-start;}
+
+  /* Ticker: satu baris, geser (swipe) horizontal — sama pola dengan menu
+     utama — supaya kontennya TIDAK PERNAH lipat ke baris ke-2/3 lagi.
+     Sebelumnya flex-wrap membuat baris tambahan "lari" ke bawah menimpa
+     hero image, karena tinggi .wrap tetap terkunci 38px. */
+  .ticker .wrap{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .ticker .wrap::-webkit-scrollbar{display:none;}
+  .ticker .item,.ticker .updated{flex-shrink:0;white-space:nowrap;}
+  .ticker .updated{margin-left:0;}
 }
 @media(max-width:760px){
   h1.headline{font-size:28px;}
