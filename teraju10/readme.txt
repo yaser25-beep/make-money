@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.12.0
+Version: 1.13.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -150,6 +150,30 @@ tinggi niat membagikan adalah TEPAT setelah pembaca selesai baca, bukan cuma
 di bagian atas artikel. Kalau JavaScript pembaca nonaktif, kotak ini tetap
 tampil normal (tidak hilang), cuma tanpa animasi.
 
+Sejak versi 1.13.0, pesan ajakannya MENYESUAIKAN kategori/tag artikel,
+bukan satu kalimat generik untuk semua artikel:
+
+  - Warisan Kalbar: "Bantu sejarah dan warisan Kalimantan Barat ini dibaca
+    lebih banyak orang."
+  - Politik (slug Rubrik 2): "Ikut sebarkan supaya isu ini didengar yang
+    berwenang."
+  - Otomotif (slug Rubrik 1): "Bagikan ke sesama pecinta otomotif Kalbar."
+  - Karhutla, Ekonomi, Hukum, Opini: masing-masing punya pesannya sendiri.
+  - Kategori/tag lain: kembali ke pesan umum seperti sebelumnya.
+  Bisa diubah lewat filter 'teraju10_end_share_message_map' kalau nanti
+  ada kategori baru yang perlu pesan khusus.
+
+  Untuk artikel liputan mendalam/pilar yang butuh ajakan yang lebih spesifik
+  dari itu (mis. "Siapa Sultan Hamid II"), isi manual lewat kotak "Pesan
+  Ajakan Bagikan (opsional)" di halaman edit artikel (sidebar kanan) — kalau
+  diisi, ini SELALU dipakai, mengalahkan pesan otomatis kategori.
+
+  Begitu sebuah artikel sudah dibagikan minimal 5 kali (dihitung jujur dari
+  klik tombol bagikan, bukan rekaan), muncul juga baris kecil "Sudah
+  dibagikan N kali" di bawah pesan ajakan tadi — social proof yang jujur,
+  disembunyikan di bawah angka itu supaya artikel yang baru dibagikan 1-2
+  kali tidak malah terkesan sepi.
+
 == Ticker harga otomatis ==
 Sejak versi 1.1.0, ticker emas & USD/IDR diperbarui sendiri lewat WP-Cron,
 2x sehari, tanpa perlu API key:
@@ -273,6 +297,18 @@ keterbacaan bagian lain artikel tetap utuh. Otomatis berhenti diputar
 (bukan cuma diam di background) untuk pembaca yang mengaktifkan pengaturan
 "reduce motion" di perangkatnya. Kecerahannya disesuaikan otomatis di mode
 gelap supaya tidak menyilaukan.
+
+== Perubahan v1.13.0 (micro-copy dinamis + social proof di kotak share) ==
+- Pesan ajakan di kotak bagikan akhir artikel sekarang menyesuaikan
+  kategori/tag artikel (Warisan Kalbar, Politik, Ekonomi, Otomotif,
+  Karhutla, Hukum, Opini masing-masing punya pesannya sendiri), plus opsi
+  isi manual per-artikel lewat meta box baru "Pesan Ajakan Bagikan". Lihat
+  "Tombol bagikan di akhir artikel" di atas.
+- Baris "Sudah dibagikan N kali" muncul otomatis begitu jumlahnya cukup
+  meyakinkan (angka jujur dari klik tombol bagikan, bukan rekaan).
+- Aksesibilitas: fokus keyboard pada tombol bagikan sekarang kelihatan
+  (outline), dan animasi kotak share dimatikan otomatis untuk pembaca yang
+  mengaktifkan "reduce motion" di perangkatnya.
 
 == Perubahan v1.12.0 (WebP otomatis + tombol share akhir artikel) ==
 - Gambar JPG/PNG otomatis dikonversi ke WebP saat diunggah, disajikan lewat

@@ -147,6 +147,27 @@
 		} );
 	}
 
+	/* Lapor satu klik bagikan ke server (lihat inc/share-counter.php) — request
+	   kecil terpisah lewat sendBeacon, sama seperti pola view-tracker.js, supaya
+	   halaman artikel tetap ramah cache. Dipanggil untuk SEMUA jenis tombol
+	   bagikan (termasuk "salin tautan", karena itu juga niat membagikan). */
+	function trackShareClick() {
+		var cfg = window.teraju10ShareTracker;
+		if ( ! cfg || ! cfg.postId ) {
+			return;
+		}
+		var body = new URLSearchParams();
+		body.set( 'action', 'teraju10_track_share' );
+		body.set( 'post_id', cfg.postId );
+		body.set( 'nonce', cfg.nonce );
+
+		if ( navigator.sendBeacon ) {
+			navigator.sendBeacon( cfg.ajaxUrl, body );
+		} else {
+			fetch( cfg.ajaxUrl, { method: 'POST', body: body, credentials: 'omit', keepalive: true } )['catch']( function () {} );
+		}
+	}
+
 	/* Tombol bagikan */
 	var shareButtons = document.querySelectorAll( '[data-share]' );
 	shareButtons.forEach( function ( btn ) {
@@ -154,6 +175,8 @@
 			var type  = btn.getAttribute( 'data-share' );
 			var url   = window.location.href;
 			var title = document.title;
+
+			trackShareClick();
 
 			if ( 'whatsapp' === type ) {
 				window.open( 'https://wa.me/?text=' + encodeURIComponent( title + ' ' + url ), '_blank', 'noopener' );

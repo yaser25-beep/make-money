@@ -152,8 +152,25 @@ while ( have_posts() ) :
 					<?php the_content(); ?>
 				</div>
 
+				<?php
+				$end_share_message = teraju10_end_share_message( $post_id );
+				$end_share_count   = teraju10_get_display_share_count( $post_id );
+				?>
 				<div class="end-share" id="endShare">
-					<p class="end-share-label"><?php esc_html_e( 'Artikel ini bermanfaat? Bagikan ke teman-teman Anda.', 'teraju10' ); ?></p>
+					<p class="end-share-label"><?php echo esc_html( $end_share_message ); ?></p>
+					<?php if ( $end_share_count > 0 ) : ?>
+						<p class="end-share-count">
+							<?php
+							echo esc_html(
+								sprintf(
+									/* translators: %s: jumlah share, sudah diformat (mis. "1.234") */
+									_n( 'Sudah dibagikan %s kali.', 'Sudah dibagikan %s kali.', $end_share_count, 'teraju10' ),
+									number_format_i18n( $end_share_count )
+								)
+							);
+							?>
+						</p>
+					<?php endif; ?>
 					<div class="end-share-buttons">
 						<button type="button" class="end-share-btn" data-share="whatsapp">
 							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.36 7.56L4 20l1.06-4.48A8.5 8.5 0 1 1 21 11.5z"></path></svg>

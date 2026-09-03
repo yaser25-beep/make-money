@@ -492,6 +492,69 @@ function teraju10_placeholder_class() {
 }
 
 /**
+ * Pesan ajakan bagikan di kotak akhir artikel, MENYESUAIKAN kategori/tag
+ * artikelnya — bukan satu kalimat generik untuk semua artikel. Prioritas:
+ * 1) pesan manual per-artikel (meta _teraju_share_message, lihat meta box
+ *    "Pesan Ajakan Bagikan"), untuk artikel liputan mendalam/pilar yang
+ *    ingin pesan spesifik; 2) kecocokan kategori/tag lewat peta di
+ *    teraju10_end_share_message_map(); 3) pesan default umum.
+ * Bisa disesuaikan lebih lanjut lewat filter 'teraju10_end_share_message'
+ * (mis. oleh automasi yang tahu konteks lebih spesifik dari satu artikel).
+ *
+ * @param int $post_id ID artikel.
+ * @return string
+ */
+function teraju10_end_share_message( $post_id = 0 ) {
+	$post_id = $post_id ? $post_id : get_the_ID();
+
+	$manual = trim( (string) get_post_meta( $post_id, '_teraju_share_message', true ) );
+	if ( '' !== $manual ) {
+		return apply_filters( 'teraju10_end_share_message', $manual, $post_id );
+	}
+
+	$default = __( 'Artikel ini bermanfaat? Bagikan ke teman-teman Anda.', 'teraju10' );
+	$map     = teraju10_end_share_message_map();
+
+	$post_tags = get_the_tags( $post_id );
+	$slugs     = array_merge(
+		wp_list_pluck( get_the_category( $post_id ), 'slug' ),
+		$post_tags ? wp_list_pluck( $post_tags, 'slug' ) : array()
+	);
+
+	foreach ( $map as $slug => $message ) {
+		if ( '' !== $slug && in_array( $slug, $slugs, true ) ) {
+			return apply_filters( 'teraju10_end_share_message', $message, $post_id );
+		}
+	}
+
+	return apply_filters( 'teraju10_end_share_message', $default, $post_id );
+}
+
+/**
+ * Peta slug kategori/tag -> pesan ajakan bagikan yang lebih relevan
+ * daripada kalimat generik. Urutan array menentukan prioritas kalau satu
+ * artikel cocok dengan lebih dari satu slug. Beberapa entri diambil
+ * langsung dari slug yang sudah diatur di Customizer (Rubrik Homepage /
+ * Efek Kesadaran Karhutla), supaya otomatis ikut benar kalau slug itu
+ * diubah — bukan di-hardcode dua kali di dua tempat berbeda.
+ *
+ * @return array
+ */
+function teraju10_end_share_message_map() {
+	$map = array(
+		teraju10_get_option( 'karhutla_category' ) => __( 'Bagikan supaya lebih banyak orang tahu kondisi ini.', 'teraju10' ),
+		teraju10_get_option( 'warisan_category' )  => __( 'Bantu sejarah dan warisan Kalimantan Barat ini dibaca lebih banyak orang.', 'teraju10' ),
+		teraju10_get_option( 'rubric_2_category' ) => __( 'Ikut sebarkan supaya isu ini didengar yang berwenang.', 'teraju10' ),
+		teraju10_get_option( 'rubric_1_category' ) => __( 'Bagikan ke sesama pecinta otomotif Kalbar.', 'teraju10' ),
+		'ekonomi'                                   => __( 'Bagikan supaya lebih banyak warga Kalbar tahu dampaknya.', 'teraju10' ),
+		'hukum'                                     => __( 'Bagikan supaya lebih banyak orang tahu duduk perkaranya.', 'teraju10' ),
+		'opini'                                     => __( 'Setuju atau tidak, ikut sebarkan biar diskusinya lebih ramai.', 'teraju10' ),
+	);
+
+	return apply_filters( 'teraju10_end_share_message_map', $map );
+}
+
+/**
  * Cek apakah sebuah kategori (berdasarkan slug) memang ada, supaya query rubrik
  * di homepage tidak pernah pecah walau slug-nya diketik salah di Customizer.
  *

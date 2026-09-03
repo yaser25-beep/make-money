@@ -4,7 +4,7 @@ Theme URI: https://teraju.id
 Author: teraju.id
 Author URI: https://teraju.id
 Description: Tema berita modern untuk teraju.id — ringan, sadar SEO/GEO/AEO, dengan sidebar widget yang bisa diatur penuh dari dashboard tanpa Elementor. Warna diambil dari identitas Kalimantan Barat: emas (tambang & harga Antam) dan teal sungai Kapuas.
-Version: 1.12.0
+Version: 1.13.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.8
@@ -244,11 +244,16 @@ h1.headline{font-family:var(--font-display);font-size:40px;font-weight:600;line-
 .end-share{margin:38px 0;padding:28px 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center;}
 .end-share--armed{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease;}
 .end-share--armed.is-visible{opacity:1;transform:none;}
-.end-share-label{font-family:var(--font-display);font-size:17px;font-weight:600;margin:0 0 16px;color:var(--ink);}
-.end-share-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+.end-share-label{font-family:var(--font-display);font-size:17px;font-weight:600;margin:0 0 6px;color:var(--ink);}
+.end-share-count{font-family:var(--font-body);font-size:13px;color:var(--muted);margin:0;font-variant-numeric:tabular-nums;}
+.end-share-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:14px;}
 .end-share-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid var(--line-strong);border-radius:999px;background:none;color:var(--ink-soft);font-family:var(--font-body);font-size:14px;font-weight:600;cursor:pointer;}
 .end-share-btn:hover{border-color:var(--gold);color:var(--gold-deep);}
+.end-share-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 .end-share-btn .btn-x-glyph{font-family:var(--font-display);font-weight:700;font-size:15px;line-height:1;}
+@media (prefers-reduced-motion: reduce){
+  .end-share--armed{transition:none;}
+}
 .in-article-ad{margin:32px 0;text-align:center;}
 .in-article-ad::before{content:"Iklan";display:block;font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
 

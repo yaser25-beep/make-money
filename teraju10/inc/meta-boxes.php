@@ -43,6 +43,20 @@ function teraju10_register_post_meta() {
 			},
 		)
 	);
+
+	register_post_meta(
+		'post',
+		'_teraju_share_message',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'sanitize_text_field',
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
 }
 add_action( 'init', 'teraju10_register_post_meta' );
 
@@ -62,6 +76,15 @@ function teraju10_add_meta_boxes() {
 		'teraju10_render_facts_box',
 		'post',
 		'normal',
+		'default'
+	);
+
+	add_meta_box(
+		'teraju10_share_message',
+		__( 'Pesan Ajakan Bagikan (opsional)', 'teraju10' ),
+		'teraju10_render_share_message_box',
+		'post',
+		'side',
 		'default'
 	);
 }
@@ -112,6 +135,28 @@ function teraju10_render_facts_box( $post ) {
 }
 
 /**
+ * Tampilan kotak Pesan Ajakan Bagikan.
+ *
+ * @param WP_Post $post Objek post.
+ */
+function teraju10_render_share_message_box( $post ) {
+	$value = get_post_meta( $post->ID, '_teraju_share_message', true );
+	?>
+	<p>
+		<?php esc_html_e( 'Kalimat ajakan di kotak "bagikan" akhir artikel. Kosongkan untuk pesan otomatis sesuai kategori/tag artikel ini. Cocok diisi manual untuk artikel liputan mendalam/pilar yang butuh ajakan spesifik.', 'teraju10' ); ?>
+	</p>
+	<input
+		type="text"
+		name="teraju10_share_message"
+		style="width:100%;"
+		maxlength="150"
+		value="<?php echo esc_attr( $value ); ?>"
+		placeholder="<?php esc_attr_e( 'Bantu sejarah ini dibaca lebih banyak orang', 'teraju10' ); ?>"
+	/>
+	<?php
+}
+
+/**
  * Simpan data meta box dengan aman: cek nonce, cek autosave, cek hak akses.
  *
  * @param int $post_id ID post yang sedang disimpan.
@@ -139,6 +184,10 @@ function teraju10_save_meta_boxes( $post_id ) {
 
 	if ( isset( $_POST['teraju10_facts'] ) ) {
 		update_post_meta( $post_id, '_teraju_facts', sanitize_textarea_field( wp_unslash( $_POST['teraju10_facts'] ) ) );
+	}
+
+	if ( isset( $_POST['teraju10_share_message'] ) ) {
+		update_post_meta( $post_id, '_teraju_share_message', sanitize_text_field( wp_unslash( $_POST['teraju10_share_message'] ) ) );
 	}
 }
 add_action( 'save_post', 'teraju10_save_meta_boxes' );
