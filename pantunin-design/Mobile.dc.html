@@ -1,0 +1,280 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { display: none; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+    @keyframes typeBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
+    .ticker-track { display: flex; gap: 40px; white-space: nowrap; animation: marquee 22s linear infinite; }
+    .pulse { animation: pulseDot 1.6s ease-in-out infinite; }
+    .tdot { animation: typeBounce 1s ease-in-out infinite; }
+    .hscroll { display: flex; gap: 14px; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+  </style>
+</helmet>
+
+<div style="width:390px; background:oklch(96% 0.02 75); font-family:'Plus Jakarta Sans', system-ui, sans-serif; color:oklch(24% 0.035 30); position:relative; overflow:hidden;">
+
+  <!-- LIVE TICKER -->
+  <div style="background:oklch(16% 0.045 30); color:oklch(88% 0.04 78); padding:8px 0; overflow:hidden;">
+    <div class="ticker-track" style="font-size:12px; font-weight:500;">
+      <span style="display:flex; align-items:center; gap:7px;"><span class="pulse" style="width:6px; height:6px; border-radius:50%; background:oklch(68% 0.19 25); display:inline-block;"></span>389 online di Arena sekarang</span>
+      <span>•</span><span>27 pantun baru dari Grup Riau Bersatu</span>
+      <span>•</span><span>1.284 pantun dibalas hari ini</span>
+      <span style="display:flex; align-items:center; gap:7px;"><span class="pulse" style="width:6px; height:6px; border-radius:50%; background:oklch(68% 0.19 25); display:inline-block;"></span>389 online di Arena sekarang</span>
+      <span>•</span><span>27 pantun baru dari Grup Riau Bersatu</span>
+      <span>•</span><span>1.284 pantun dibalas hari ini</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid oklch(88% 0.025 70); background:oklch(99% 0.008 75);">
+    <span style="font-family:'Spectral', serif; font-weight:700; font-size:22px; color:oklch(40% 0.15 25);">Pantunin</span>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="oklch(30% 0.03 40)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(24% 0.035 30)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div style="padding:28px 18px 24px;">
+    <div style="display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:700; color:oklch(40% 0.15 25); background:oklch(93% 0.035 78); padding:5px 10px; border-radius:20px; margin-bottom:16px;">
+      <span class="pulse" style="width:6px; height:6px; border-radius:50%; background:oklch(40% 0.15 25); display:inline-block;"></span>
+      LANGSUNG &middot; Ribuan pantun berbalas
+    </div>
+    <h1 style="font-family:'Spectral', serif; font-weight:600; font-size:32px; line-height:1.12; margin:0 0 14px; color:oklch(20% 0.04 30);">Rumah pantun Nusantara yang hidup, setiap detik.</h1>
+    <p style="font-size:14.5px; line-height:1.6; color:oklch(45% 0.03 40); margin:0 0 22px;">Balas pantun sesama pengunjung, jelajahi ribuan pantun nasehat, romantis &amp; lucu, sampai sewa jasa pemantun &mdash; satu tempat saja.</p>
+    <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:22px;">
+      <a href="#arena" style="text-align:center; font-size:15px; font-weight:700; color:oklch(99% 0.008 75); background:oklch(40% 0.15 25); padding:15px; border-radius:11px;">Masuk Arena Balas Pantun</a>
+      <a href="#ai" style="text-align:center; font-size:13.5px; font-weight:700; color:oklch(52% 0.12 75); border:1.5px solid oklch(80% 0.06 76); padding:12px; border-radius:11px;">Butuh pantun kilat? Coba Pantunin AI</a>
+    </div>
+    <div style="display:flex; gap:18px; padding-top:18px; border-top:1px solid oklch(88% 0.025 70);">
+      <div><div style="font-family:'Spectral', serif; font-size:19px; font-weight:700;">1.284</div><div style="font-size:10.5px; color:oklch(45% 0.03 40); font-weight:500;">dibalas hari ini</div></div>
+      <div><div style="font-family:'Spectral', serif; font-size:19px; font-weight:700;">389</div><div style="font-size:10.5px; color:oklch(45% 0.03 40); font-weight:500;">online sekarang</div></div>
+      <div><div style="font-family:'Spectral', serif; font-size:19px; font-weight:700;">12.9K</div><div style="font-size:10.5px; color:oklch(45% 0.03 40); font-weight:500;">anggota Arena</div></div>
+    </div>
+  </div>
+
+  <svg width="100%" height="12" viewBox="0 0 100 12" preserveAspectRatio="none" style="display:block;"><defs><pattern id="mpr1" width="12" height="12" patternUnits="userSpaceOnUse"><polygon points="0,12 6,0 12,12" fill="oklch(68% 0.13 78)"></polygon></pattern></defs><rect width="100" height="12" fill="url(#mpr1)"></rect></svg>
+
+  <!-- AD BANNER -->
+  <div style="padding:20px 18px;">
+    <div style="position:relative; border:1.5px dashed oklch(72% 0.03 60); border-radius:12px; background:oklch(93% 0.012 70); padding:16px; display:flex; align-items:center; justify-content:center; height:70px;">
+      <span style="position:absolute; top:8px; left:12px; font-size:9px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:oklch(50% 0.02 60); background:oklch(99% 0.008 75); padding:2px 7px; border-radius:6px; border:1px solid oklch(80% 0.02 60);">Iklan</span>
+      <span style="font-size:12px; font-weight:600; color:oklch(55% 0.02 60);">Ruang Iklan &middot; 340&times;70</span>
+    </div>
+  </div>
+
+  <!-- KATEGORI -->
+  <div style="padding:8px 18px 28px;">
+    <h2 style="font-family:'Spectral', serif; font-weight:600; font-size:22px; margin:0 0 4px; color:oklch(20% 0.04 30);">Pilih kategori pantun</h2>
+    <p style="font-size:13px; color:oklch(45% 0.03 40); margin:0 0 16px;">Dari petuah sampai gombalan kekinian.</p>
+    <div class="hscroll">
+      <div style="flex-shrink:0; width:210px; background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:16px; padding:18px;">
+        <div style="width:44px; height:44px; border-radius:12px; background:oklch(93% 0.035 78); display:flex; align-items:center; justify-content:center; color:oklch(40% 0.15 25); margin-bottom:12px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-4 0-9 2-12 6-2 2.6-3 5-3 7 0 .6.4 1 1 1 2 0 4.4-1 7-3 4-3 6-8 6-12 0-.4.1-.7.2-1z"></path><path d="M9 15 4 20"></path></svg>
+        </div>
+        <div style="font-size:16.5px; font-weight:800; margin-bottom:5px;">Nasehat</div>
+        <div style="font-size:11.5px; color:oklch(52% 0.12 75); font-weight:700;">4.120 pantun</div>
+      </div>
+      <div style="flex-shrink:0; width:210px; background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:16px; padding:18px;">
+        <div style="width:44px; height:44px; border-radius:12px; background:oklch(93% 0.035 78); display:flex; align-items:center; justify-content:center; color:oklch(40% 0.15 25); margin-bottom:12px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.7-10-9.4C.4 7.7 2 4 5.6 4c2 0 3.6 1.1 4.4 2.7C10.8 5.1 12.4 4 14.4 4 18 4 19.6 7.7 18 11.1c-2.5 4.7-10 9.4-10 9.4z"></path></svg>
+        </div>
+        <div style="font-size:16.5px; font-weight:800; margin-bottom:5px;">Romantis</div>
+        <div style="font-size:11.5px; color:oklch(52% 0.12 75); font-weight:700;">3.480 pantun</div>
+      </div>
+      <div style="flex-shrink:0; width:210px; background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:16px; padding:18px;">
+        <div style="width:44px; height:44px; border-radius:12px; background:oklch(93% 0.035 78); display:flex; align-items:center; justify-content:center; color:oklch(40% 0.15 25); margin-bottom:12px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M8.5 10.5h.01M15.5 10.5h.01"></path><path d="M7.5 14c1.2 1.6 3 2.4 4.5 2.4s3.3-.8 4.5-2.4"></path></svg>
+        </div>
+        <div style="font-size:16.5px; font-weight:800; margin-bottom:5px;">Lucu</div>
+        <div style="font-size:11.5px; color:oklch(52% 0.12 75); font-weight:700;">5.960 pantun</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAHASA -->
+  <div style="padding:0 18px 28px;">
+    <h2 style="font-family:'Spectral', serif; font-weight:600; font-size:22px; margin:0 0 4px; color:oklch(20% 0.04 30);">Pantun seluruh Nusantara</h2>
+    <p style="font-size:13px; color:oklch(45% 0.03 40); margin:0 0 16px;">Bahasa Indonesia aktif, daerah lain menyusul.</p>
+    <div class="hscroll">
+      <span style="flex-shrink:0; display:flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:oklch(99% 0.008 75); background:oklch(40% 0.15 25); padding:10px 16px; border-radius:24px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Indonesia
+      </span>
+      <span style="flex-shrink:0; font-size:13px; font-weight:600; color:oklch(50% 0.02 60); background:oklch(93% 0.012 70); padding:10px 16px; border-radius:24px;">Sambas <span style="font-size:9px; font-weight:800; color:oklch(52% 0.12 75);">SEGERA</span></span>
+      <span style="flex-shrink:0; font-size:13px; font-weight:600; color:oklch(50% 0.02 60); background:oklch(93% 0.012 70); padding:10px 16px; border-radius:24px;">Jawa <span style="font-size:9px; font-weight:800; color:oklch(52% 0.12 75);">SEGERA</span></span>
+      <span style="flex-shrink:0; font-size:13px; font-weight:600; color:oklch(50% 0.02 60); background:oklch(93% 0.012 70); padding:10px 16px; border-radius:24px;">Sunda <span style="font-size:9px; font-weight:800; color:oklch(52% 0.12 75);">SEGERA</span></span>
+      <span style="flex-shrink:0; font-size:13px; font-weight:600; color:oklch(50% 0.02 60); background:oklch(93% 0.012 70); padding:10px 16px; border-radius:24px;">Minang <span style="font-size:9px; font-weight:800; color:oklch(52% 0.12 75);">SEGERA</span></span>
+    </div>
+  </div>
+
+  <!-- ARENA -->
+  <div style="padding:0 18px 28px;">
+    <div style="background:oklch(24% 0.09 25); border-radius:20px; padding:26px 22px; color:oklch(96% 0.02 75);">
+      <div style="display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:700; background:oklch(30% 0.1 25); padding:5px 10px; border-radius:20px; margin-bottom:14px;">
+        <span class="pulse" style="width:6px; height:6px; border-radius:50%; background:oklch(85% 0.15 78); display:inline-block;"></span>
+        Arena Balas Pantun
+      </div>
+      <h2 style="font-family:'Spectral', serif; font-weight:600; font-size:22px; margin:0 0 8px;">Tempatnya manusia asli, bukan AI.</h2>
+      <p style="font-size:13px; line-height:1.6; color:oklch(85% 0.03 75); margin:0 0 18px;">Balas pantun pembuka dari pengunjung lain dengan sampiran-isi yang nyambung. Semua balasan diverifikasi buatan manusia.</p>
+      <div style="background:oklch(30% 0.06 30); border-radius:14px; padding:16px; margin-bottom:16px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+          <div style="width:22px; height:22px; border-radius:50%; background:oklch(75% 0.1 30);"></div>
+          <span style="font-size:12px; font-weight:700;">Sari Melati</span>
+          <span style="font-size:10.5px; color:oklch(75% 0.03 75); margin-left:auto;">Lucu</span>
+        </div>
+        <p style="font-family:'Spectral', serif; font-style:italic; font-size:13.5px; line-height:1.6; margin:0;">Jalan-jalan ke kota Padang, jangan lupa beli rendang&hellip;</p>
+      </div>
+      <a href="#" style="display:block; text-align:center; font-size:13.5px; font-weight:700; color:oklch(20% 0.04 30); background:oklch(85% 0.13 78); padding:13px; border-radius:11px;">Gabung &amp; Balas &rarr;</a>
+    </div>
+  </div>
+
+  <!-- WA FEED -->
+  <div style="padding:0 18px 28px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+      <h2 style="font-family:'Spectral', serif; font-weight:600; font-size:22px; margin:0; color:oklch(20% 0.04 30);">Pilihan dari Grup WA</h2>
+    </div>
+    <div style="display:flex; align-items:center; gap:6px; font-size:11px; font-weight:700; color:oklch(52% 0.12 75); margin-bottom:14px;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"></path><rect x="5" y="8" width="14" height="10" rx="3"></rect><path d="M9 13v.01M15 13v.01"></path></svg>
+      Auto-scrape aktif &middot; 12 menit lalu
+    </div>
+    <div class="hscroll">
+      <div style="flex-shrink:0; width:250px; background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:14px; padding:18px;">
+        <div style="font-size:10.5px; font-weight:700; color:oklch(45% 0.03 40); margin-bottom:10px;">Grup Pantun Pagi Nusantara</div>
+        <p style="font-family:'Spectral', serif; font-style:italic; font-size:13.5px; line-height:1.6; margin:0;">Anak dara menjahit kain,<br>Benangnya putus tersangkut jarum,<br>Assalamualaikum sahabat lain,<br>Selamat pagi penuh syukur.</p>
+      </div>
+      <div style="flex-shrink:0; width:250px; background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:14px; padding:18px;">
+        <div style="font-size:10.5px; font-weight:700; color:oklch(45% 0.03 40); margin-bottom:10px;">Grup Pemantun Riau Bersatu</div>
+        <p style="font-family:'Spectral', serif; font-style:italic; font-size:13.5px; line-height:1.6; margin:0;">Pergi memancing di tepi rawa,<br>Dapat ikan seekor gabus,<br>Jaga lisan jaga bahasa,<br>Itulah tanda budi yang halus.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SANG PEMANTUN -->
+  <div style="padding:0 18px 28px;">
+    <h2 style="font-family:'Spectral', serif; font-weight:600; font-size:22px; margin:0 0 4px; color:oklch(20% 0.04 30);">Sang Pemantun</h2>
+    <p style="font-size:13px; color:oklch(45% 0.03 40); margin:0 0 16px;">Sewa jasa pemantun untuk acaramu.</p>
+    <div class="hscroll">
+      <div style="flex-shrink:0; width:160px; background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:16px; padding:16px; text-align:center;">
+        <div style="width:56px; height:56px; border-radius:50%; background:oklch(75% 0.1 30); margin:0 auto 10px;"></div>
+        <div style="font-size:13.5px; font-weight:800; margin-bottom:3px;">Kak Rahmah</div>
+        <div style="font-size:10.5px; color:oklch(52% 0.12 75); font-weight:700; margin-bottom:8px;">MC Pernikahan</div>
+        <a href="#" style="display:block; font-size:11.5px; font-weight:700; color:oklch(99% 0.008 75); background:oklch(40% 0.15 25); padding:9px; border-radius:8px;">Booking</a>
+      </div>
+      <div style="flex-shrink:0; width:160px; background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:16px; padding:16px; text-align:center;">
+        <div style="width:56px; height:56px; border-radius:50%; background:oklch(60% 0.1 250); margin:0 auto 10px;"></div>
+        <div style="font-size:13.5px; font-weight:800; margin-bottom:3px;">Bang Zulfikar</div>
+        <div style="font-size:10.5px; color:oklch(52% 0.12 75); font-weight:700; margin-bottom:8px;">Korporat &amp; Seminar</div>
+        <a href="#" style="display:block; font-size:11.5px; font-weight:700; color:oklch(99% 0.008 75); background:oklch(40% 0.15 25); padding:9px; border-radius:8px;">Booking</a>
+      </div>
+      <div style="flex-shrink:0; width:160px; background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:16px; padding:16px; text-align:center;">
+        <div style="width:56px; height:56px; border-radius:50%; background:oklch(68% 0.11 150); margin:0 auto 10px;"></div>
+        <div style="font-size:13.5px; font-weight:800; margin-bottom:3px;">Kak Intan</div>
+        <div style="font-size:10.5px; color:oklch(52% 0.12 75); font-weight:700; margin-bottom:8px;">Lamaran &amp; Sunatan</div>
+        <a href="#" style="display:block; font-size:11.5px; font-weight:700; color:oklch(99% 0.008 75); background:oklch(40% 0.15 25); padding:9px; border-radius:8px;">Booking</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MERCH -->
+  <div style="padding:0 18px 28px;">
+    <h2 style="font-family:'Spectral', serif; font-weight:600; font-size:22px; margin:0 0 4px; color:oklch(20% 0.04 30);">Merchandise</h2>
+    <p style="font-size:13px; color:oklch(45% 0.03 40); margin:0 0 16px;">Pakai pantun, bukan cuma baca.</p>
+    <div class="hscroll">
+      <div style="flex-shrink:0; width:150px; background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:14px; overflow:hidden;">
+        <div style="height:96px; background:oklch(93% 0.035 78); display:flex; align-items:center; justify-content:center; color:oklch(52% 0.12 75);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 6l2 3 2-1v11h8V8l2 1 2-3-4-3-2 2h-4L8 3z"></path></svg>
+        </div>
+        <div style="padding:12px;">
+          <div style="font-size:11.5px; font-weight:700; line-height:1.35; margin-bottom:6px;">Kaos &ldquo;Sejuta Makna&rdquo;</div>
+          <div style="font-size:12px; font-weight:800; color:oklch(40% 0.15 25);">Rp129rb</div>
+        </div>
+      </div>
+      <div style="flex-shrink:0; width:150px; background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:14px; overflow:hidden;">
+        <div style="height:96px; background:oklch(93% 0.035 78); display:flex; align-items:center; justify-content:center; color:oklch(52% 0.12 75);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11v9a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V4z"></path><path d="M15 7h2a3 3 0 0 1 0 6h-2"></path></svg>
+        </div>
+        <div style="padding:12px;">
+          <div style="font-size:11.5px; font-weight:700; line-height:1.35; margin-bottom:6px;">Mug &ldquo;Sumur di Ladang&rdquo;</div>
+          <div style="font-size:12px; font-weight:800; color:oklch(40% 0.15 25);">Rp89rb</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NATIVE AD -->
+  <div style="padding:0 18px 28px;">
+    <div style="position:relative; border:1.5px dashed oklch(72% 0.03 60); border-radius:12px; background:oklch(93% 0.012 70); padding:14px; display:flex; align-items:center; justify-content:center; height:56px;">
+      <span style="position:absolute; top:7px; left:12px; font-size:9px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:oklch(50% 0.02 60); background:oklch(99% 0.008 75); padding:2px 7px; border-radius:6px; border:1px solid oklch(80% 0.02 60);">Iklan</span>
+      <span style="font-size:11.5px; font-weight:600; color:oklch(55% 0.02 60);">Ruang Iklan Native</span>
+    </div>
+  </div>
+
+  <!-- OTOMASI -->
+  <div style="padding:0 18px 28px;">
+    <h3 style="font-family:'Spectral', serif; font-weight:600; font-size:18px; margin:0 0 16px; color:oklch(20% 0.04 30);">Apa yang otomatis</h3>
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div style="display:flex; gap:12px;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="oklch(40% 0.15 25)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M4 5h16v11H8l-4 4V5z"></path></svg>
+        <div><div style="font-size:13px; font-weight:700; margin-bottom:2px;">Auto-scrape Grup WA</div><div style="font-size:12px; color:oklch(45% 0.03 40); line-height:1.5;">Pantun masuk otomatis tiap jam.</div></div>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="oklch(40% 0.15 25)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M3 8l4 3 5-6 5 6 4-3-2 10H5L3 8z"></path><path d="M5 21h14"></path></svg>
+        <div><div style="font-size:13px; font-weight:700; margin-bottom:2px;">Leaderboard Real-Time</div><div style="font-size:12px; color:oklch(45% 0.03 40); line-height:1.5;">Peringkat update tiap balasan.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOFT SELL AI -->
+  <div style="padding:0 18px 28px;">
+    <div style="background:oklch(93% 0.035 78); border:1px solid oklch(82% 0.06 76); border-radius:18px; padding:22px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+        <div style="width:38px; height:38px; border-radius:12px; background:oklch(99% 0.008 75); display:flex; align-items:center; justify-content:center; color:oklch(52% 0.12 75); flex-shrink:0;">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"></path><rect x="5" y="8" width="14" height="10" rx="3"></rect><path d="M9 13v.01M15 13v.01"></path></svg>
+        </div>
+        <div style="font-family:'Spectral', serif; font-weight:600; font-size:16.5px;">Nggak sempat mikir pantun?</div>
+      </div>
+      <p style="font-size:12.5px; color:oklch(40% 0.03 40); line-height:1.55; margin:0 0 14px;">Biar Pantunin AI bantu dalam hitungan detik. Mau battle sama manusia? Baliknya ke Arena ya.</p>
+      <a href="#" style="display:block; text-align:center; font-size:12.5px; font-weight:700; color:oklch(99% 0.008 75); background:oklch(52% 0.12 75); padding:12px; border-radius:10px;">Coba Pantunin AI &rarr;</a>
+    </div>
+  </div>
+
+  <svg width="100%" height="12" viewBox="0 0 100 12" preserveAspectRatio="none" style="display:block;"><defs><pattern id="mpr2" width="12" height="12" patternUnits="userSpaceOnUse"><polygon points="0,12 6,0 12,12" fill="oklch(52% 0.12 75)"></polygon></pattern></defs><rect width="100" height="12" fill="url(#mpr2)"></rect></svg>
+
+  <!-- FOOTER -->
+  <div style="background:oklch(16% 0.045 30); color:oklch(80% 0.025 75); padding:32px 18px 20px;">
+    <div style="font-family:'Spectral', serif; font-weight:700; font-size:19px; color:oklch(96% 0.02 75); margin-bottom:14px;">Pantunin</div>
+    <div style="display:flex; flex-wrap:wrap; gap:12px 20px; font-size:12.5px; margin-bottom:20px;">
+      <a href="#">Arena</a><a href="#">Kategori</a><a href="#">Sang Pemantun</a><a href="#">Merchandise</a><a href="#">Bantuan</a>
+    </div>
+    <div style="border-top:1px solid oklch(28% 0.03 30); padding-top:16px; font-size:11px; color:oklch(60% 0.02 60); line-height:1.6;">
+      &copy; 2026 Pantunin.<br>Pantun dari Grup WA dikurasi otomatis &amp; dicantumkan sumbernya.
+    </div>
+  </div>
+
+  <!-- FLOATING AI WIDGET -->
+  <div style="position:fixed; right:16px; bottom:16px; width:52px; height:52px; border-radius:50%; background:oklch(24% 0.09 25); display:flex; align-items:center; justify-content:center; box-shadow:0 10px 22px -6px oklch(20% 0.06 30 / .5); z-index:20;">
+    <div style="position:relative;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(85% 0.13 78)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"></path><rect x="5" y="8" width="14" height="10" rx="3"></rect><path d="M9 13v.01M15 13v.01"></path></svg>
+      <span class="pulse" style="position:absolute; top:-8px; right:-8px; width:8px; height:8px; border-radius:50%; background:oklch(65% 0.15 145); border:2px solid oklch(24% 0.09 25);"></span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

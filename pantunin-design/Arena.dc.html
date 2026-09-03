@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    a { color: inherit; text-decoration: none; }
+    @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+    @keyframes typeBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
+    .pulse { animation: pulseDot 1.6s ease-in-out infinite; }
+    .tdot { animation: typeBounce 1s ease-in-out infinite; }
+  </style>
+</helmet>
+
+<div style="width:1200px; background:oklch(96% 0.02 75); font-family:'Plus Jakarta Sans', system-ui, sans-serif; color:oklch(24% 0.035 30); padding:0;">
+
+  <!-- HEADER -->
+  <div style="padding:22px 40px; border-bottom:1px solid oklch(88% 0.025 70); background:oklch(99% 0.008 75); display:flex; align-items:center; justify-content:space-between;">
+    <div>
+      <div style="font-size:12px; color:oklch(45% 0.03 40); font-weight:600; margin-bottom:6px;">Arena Balas Pantun / Kategori: Lucu</div>
+      <h1 style="font-family:'Spectral', serif; font-weight:600; font-size:26px; margin:0; color:oklch(20% 0.04 30);">Thread: &ldquo;Jalan-jalan ke kota Padang&rdquo;</h1>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:oklch(40% 0.15 25); background:oklch(93% 0.035 78); padding:8px 14px; border-radius:20px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+      Hanya balasan manusia &mdash; bukan AI
+    </div>
+  </div>
+
+  <!-- FILTER TABS -->
+  <div style="padding:16px 40px; display:flex; align-items:center; justify-content:space-between; background:oklch(99% 0.008 75); border-bottom:1px solid oklch(88% 0.025 70);">
+    <div style="display:flex; gap:8px;">
+      <span style="font-size:13px; font-weight:700; color:oklch(45% 0.03 40); padding:9px 16px; border-radius:20px;">Semua</span>
+      <span style="font-size:13px; font-weight:700; color:oklch(45% 0.03 40); padding:9px 16px; border-radius:20px;">Nasehat</span>
+      <span style="font-size:13px; font-weight:700; color:oklch(45% 0.03 40); padding:9px 16px; border-radius:20px;">Romantis</span>
+      <span style="font-size:13px; font-weight:700; color:oklch(99% 0.008 75); background:oklch(40% 0.15 25); padding:9px 16px; border-radius:20px;">Lucu</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:oklch(45% 0.03 40); border:1px solid oklch(88% 0.025 70); padding:9px 14px; border-radius:20px;">
+      Bahasa: Indonesia
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div style="padding:32px 40px 48px; display:grid; grid-template-columns:1.65fr 1fr; gap:32px; align-items:start;">
+
+    <!-- MAIN THREAD -->
+    <div>
+      <div style="background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:18px; padding:22px; margin-bottom:18px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div style="width:34px; height:34px; border-radius:50%; background:oklch(75% 0.1 30); flex-shrink:0;"></div>
+          <div style="flex:1;">
+            <div style="display:flex; align-items:center; gap:6px;"><span style="font-size:14px; font-weight:700;">Sari Melati</span><span style="width:6px; height:6px; border-radius:50%; background:oklch(65% 0.15 145); display:inline-block;"></span></div>
+            <div style="font-size:11.5px; color:oklch(45% 0.03 40);">5 menit lalu &middot; membuka thread</div>
+          </div>
+          <span style="font-size:11px; font-weight:700; color:oklch(52% 0.12 75); background:oklch(93% 0.035 78); padding:4px 10px; border-radius:14px;">Lucu</span>
+        </div>
+        <p style="font-family:'Spectral', serif; font-style:italic; font-size:17px; line-height:1.7; margin:0 0 16px; color:oklch(24% 0.035 30);">Jalan-jalan ke kota Padang,<br>Jangan lupa beli rendang,<br>Kalau kamu rajin menantang,<br>Ayo balas sampai menang!</p>
+        <div style="display:flex; align-items:center; gap:18px; font-size:12.5px; color:oklch(45% 0.03 40); font-weight:600;">
+          <span style="display:flex; align-items:center; gap:5px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11v9H4v-9h3z"></path><path d="M7 11l3-7a2 2 0 0 1 2 2v4h5.5a1.5 1.5 0 0 1 1.45 1.87l-1.4 5.5A2 2 0 0 1 15.6 20H9a2 2 0 0 1-2-2v-7z"></path></svg>82 kena!</span>
+          <span style="display:flex; align-items:center; gap:5px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 4V5z"></path></svg>14 balasan</span>
+        </div>
+      </div>
+
+      <!-- REPLIES -->
+      <div style="padding-left:28px; border-left:2px solid oklch(88% 0.025 70); margin-bottom:14px;">
+        <div style="background:oklch(93% 0.035 78); border-radius:16px; padding:20px; margin-bottom:14px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <div style="width:30px; height:30px; border-radius:50%; background:oklch(60% 0.1 250); flex-shrink:0;"></div>
+            <div style="flex:1;"><span style="font-size:13.5px; font-weight:700;">Budi Santoso</span><div style="font-size:11px; color:oklch(45% 0.03 40);">2 menit lalu</div></div>
+          </div>
+          <p style="font-family:'Spectral', serif; font-style:italic; font-size:15.5px; line-height:1.65; margin:0 0 12px;">Naik oplet ke Pasar Baru,<br>Turun sebentar beli lontong,<br>Pantunmu ini aku terima seru,<br>Siap balas sampai kau terbengong!</p>
+          <div style="display:flex; align-items:center; gap:16px; font-size:12px; color:oklch(45% 0.03 40); font-weight:600;">
+            <span style="display:flex; align-items:center; gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11v9H4v-9h3z"></path><path d="M7 11l3-7a2 2 0 0 1 2 2v4h5.5a1.5 1.5 0 0 1 1.45 1.87l-1.4 5.5A2 2 0 0 1 15.6 20H9a2 2 0 0 1-2-2v-7z"></path></svg>31 kena!</span>
+            <span style="display:flex; align-items:center; gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"></path><path d="M5 4h13l-3 4 3 4H5"></path></svg>Lapor</span>
+          </div>
+        </div>
+        <div style="background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:16px; padding:20px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <div style="width:30px; height:30px; border-radius:50%; background:oklch(68% 0.11 150); flex-shrink:0;"></div>
+            <div style="flex:1;"><span style="font-size:13.5px; font-weight:700;">Rangga P.</span><div style="font-size:11px; color:oklch(45% 0.03 40);">1 menit lalu</div></div>
+          </div>
+          <p style="font-family:'Spectral', serif; font-style:italic; font-size:15.5px; line-height:1.65; margin:0 0 12px;">Pergi ke Bukittinggi naik andong,<br>Mampir sebentar beli karupuak,<br>Kalau pantunmu memang sudah oke,<br>Aku balas biar kau tak berkutik!</p>
+          <div style="display:flex; align-items:center; gap:16px; font-size:12px; color:oklch(45% 0.03 40); font-weight:600;">
+            <span style="display:flex; align-items:center; gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11v9H4v-9h3z"></path><path d="M7 11l3-7a2 2 0 0 1 2 2v4h5.5a1.5 1.5 0 0 1 1.45 1.87l-1.4 5.5A2 2 0 0 1 15.6 20H9a2 2 0 0 1-2-2v-7z"></path></svg>9 kena!</span>
+            <span style="display:flex; align-items:center; gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"></path><path d="M5 4h13l-3 4 3 4H5"></path></svg>Lapor</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:8px; padding:0 4px 20px; font-size:12.5px; color:oklch(45% 0.03 40); font-weight:600;">
+        3 orang sedang mengetik balasan
+        <span style="display:flex; gap:2px;">
+          <span class="tdot" style="width:4px; height:4px; border-radius:50%; background:oklch(45% 0.03 40); display:inline-block;"></span>
+          <span class="tdot" style="width:4px; height:4px; border-radius:50%; background:oklch(45% 0.03 40); display:inline-block; animation-delay:.15s;"></span>
+          <span class="tdot" style="width:4px; height:4px; border-radius:50%; background:oklch(45% 0.03 40); display:inline-block; animation-delay:.3s;"></span>
+        </span>
+      </div>
+
+      <!-- COMPOSER -->
+      <div style="background:oklch(99% 0.008 75); border:1.5px solid oklch(40% 0.15 25); border-radius:18px; padding:22px;">
+        <div style="font-size:13.5px; font-weight:800; margin-bottom:12px;">Tulis balasan pantunmu</div>
+        <div style="background:oklch(96% 0.02 75); border-radius:12px; padding:16px; margin-bottom:12px;">
+          <div style="font-size:11px; font-weight:700; color:oklch(52% 0.12 75); margin-bottom:4px;">BARIS 1&ndash;2 &middot; SAMPIRAN</div>
+          <div style="height:18px; border-bottom:1px dashed oklch(80% 0.02 60); margin-bottom:10px;"></div>
+          <div style="height:18px; border-bottom:1px dashed oklch(80% 0.02 60); margin-bottom:14px;"></div>
+          <div style="font-size:11px; font-weight:700; color:oklch(52% 0.12 75); margin-bottom:4px;">BARIS 3&ndash;4 &middot; ISI</div>
+          <div style="height:18px; border-bottom:1px dashed oklch(80% 0.02 60); margin-bottom:10px;"></div>
+          <div style="height:18px; border-bottom:1px dashed oklch(80% 0.02 60);"></div>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <span style="font-size:11.5px; color:oklch(45% 0.03 40);">0/160 karakter</span>
+          <a href="#" style="font-size:13.5px; font-weight:700; color:oklch(99% 0.008 75); background:oklch(40% 0.15 25); padding:11px 22px; border-radius:10px;">Kirim Balasan</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div style="display:flex; flex-direction:column; gap:20px;">
+      <div style="background:oklch(24% 0.09 25); border-radius:18px; padding:22px; color:oklch(96% 0.02 75);">
+        <h3 style="font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:oklch(80% 0.04 76); margin:0 0 14px; display:flex; align-items:center; gap:7px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l4 3 5-6 5 6 4-3-2 10H5L3 8z"></path><path d="M5 21h14"></path></svg>
+          Raja &amp; Ratu Pantun
+        </h3>
+        <div style="display:flex; flex-direction:column;">
+          <div style="display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid oklch(32% 0.04 30);"><span style="width:18px; color:oklch(85% 0.13 78);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l4 3 5-6 5 6 4-3-2 10H5L3 8z"></path></svg></span><div style="width:24px; height:24px; border-radius:50%; background:oklch(75% 0.1 30);"></div><span style="font-size:12.5px; font-weight:700; flex:1;">Sari Melati</span><span style="font-size:11px; color:oklch(80% 0.04 76);">214</span></div>
+          <div style="display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid oklch(32% 0.04 30);"><span style="width:18px; text-align:center; font-size:12px; font-weight:800; color:oklch(75% 0.03 75);">2</span><div style="width:24px; height:24px; border-radius:50%; background:oklch(60% 0.1 250);"></div><span style="font-size:12.5px; font-weight:700; flex:1;">Budi Santoso</span><span style="font-size:11px; color:oklch(80% 0.04 76);">189</span></div>
+          <div style="display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid oklch(32% 0.04 30);"><span style="width:18px; text-align:center; font-size:12px; font-weight:800; color:oklch(75% 0.03 75);">3</span><div style="width:24px; height:24px; border-radius:50%; background:oklch(68% 0.11 150);"></div><span style="font-size:12.5px; font-weight:700; flex:1;">Kak Intan</span><span style="font-size:11px; color:oklch(80% 0.04 76);">167</span></div>
+          <div style="display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid oklch(32% 0.04 30);"><span style="width:18px; text-align:center; font-size:12px; font-weight:800; color:oklch(75% 0.03 75);">4</span><div style="width:24px; height:24px; border-radius:50%; background:oklch(70% 0.09 60);"></div><span style="font-size:12.5px; font-weight:700; flex:1;">Rangga P.</span><span style="font-size:11px; color:oklch(80% 0.04 76);">140</span></div>
+          <div style="display:flex; align-items:center; gap:10px; padding:9px 0;"><span style="width:18px; text-align:center; font-size:12px; font-weight:800; color:oklch(75% 0.03 75);">5</span><div style="width:24px; height:24px; border-radius:50%; background:oklch(64% 0.1 20);"></div><span style="font-size:12.5px; font-weight:700; flex:1;">Dewi A.</span><span style="font-size:11px; color:oklch(80% 0.04 76);">122</span></div>
+        </div>
+      </div>
+
+      <div style="background:oklch(99% 0.008 75); border:1px solid oklch(88% 0.025 70); border-radius:18px; padding:22px;">
+        <h3 style="font-size:13.5px; font-weight:800; margin:0 0 14px;">Aturan Arena</h3>
+        <div style="display:flex; flex-direction:column; gap:11px;">
+          <div style="display:flex; gap:9px; font-size:12.5px; line-height:1.5; color:oklch(35% 0.03 40);"><span style="color:oklch(40% 0.15 25); font-weight:800;">1.</span>Pantun asli buatan sendiri, bukan tempelan.</div>
+          <div style="display:flex; gap:9px; font-size:12.5px; line-height:1.5; color:oklch(35% 0.03 40);"><span style="color:oklch(40% 0.15 25); font-weight:800;">2.</span>Ikuti skema sampiran &ndash; isi, 4 baris.</div>
+          <div style="display:flex; gap:9px; font-size:12.5px; line-height:1.5; color:oklch(35% 0.03 40);"><span style="color:oklch(40% 0.15 25); font-weight:800;">3.</span>Jaga sopan santun sesama pemantun.</div>
+          <div style="display:flex; gap:9px; font-size:12.5px; line-height:1.5; color:oklch(35% 0.03 40);"><span style="color:oklch(40% 0.15 25); font-weight:800;">4.</span>Bukan untuk pantun hasil AI &mdash; ketahuan, dihapus.</div>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:10px; font-size:12.5px; color:oklch(45% 0.03 40); font-weight:600; padding:4px 4px;">
+        <div style="display:flex;">
+          <div style="width:22px; height:22px; border-radius:50%; background:oklch(75% 0.1 30); border:2px solid oklch(96% 0.02 75);"></div>
+          <div style="width:22px; height:22px; border-radius:50%; background:oklch(60% 0.1 250); border:2px solid oklch(96% 0.02 75); margin-left:-8px;"></div>
+          <div style="width:22px; height:22px; border-radius:50%; background:oklch(68% 0.11 150); border:2px solid oklch(96% 0.02 75); margin-left:-8px;"></div>
+        </div>
+        24 orang aktif di thread ini
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
