@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'TERAJU10_VERSION' ) ) {
-	define( 'TERAJU10_VERSION', '1.11.0' );
+	define( 'TERAJU10_VERSION', '1.12.0' );
 }
 
 /**
@@ -230,3 +230,4 @@ require get_template_directory() . '/inc/widgets.php';
 require get_template_directory() . '/inc/price-ticker.php';
 require get_template_directory() . '/inc/seo-meta.php';
 require get_template_directory() . '/inc/adsense.php';
+require get_template_directory() . '/inc/webp.php';

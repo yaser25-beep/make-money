@@ -160,13 +160,26 @@
 				return;
 			}
 
+			if ( 'twitter' === type ) {
+				window.open( 'https://twitter.com/intent/tweet?text=' + encodeURIComponent( title ) + '&url=' + encodeURIComponent( url ), '_blank', 'noopener' );
+				return;
+			}
+
 			if ( 'copy' === type ) {
-				var restoreLabel = btn.getAttribute( 'aria-label' );
+				var labelEl      = btn.querySelector( '.btn-label' );
+				var restoreLabel = labelEl ? labelEl.textContent : btn.getAttribute( 'aria-label' );
 				var finish       = function () {
-					btn.setAttribute( 'aria-label', 'Tautan tersalin' );
-					setTimeout( function () {
-						btn.setAttribute( 'aria-label', restoreLabel );
-					}, 1800 );
+					if ( labelEl ) {
+						labelEl.textContent = 'Tersalin!';
+						setTimeout( function () {
+							labelEl.textContent = restoreLabel;
+						}, 1800 );
+					} else {
+						btn.setAttribute( 'aria-label', 'Tautan tersalin' );
+						setTimeout( function () {
+							btn.setAttribute( 'aria-label', restoreLabel );
+						}, 1800 );
+					}
 				};
 
 				if ( navigator.clipboard && navigator.clipboard.writeText ) {
@@ -179,4 +192,19 @@
 			}
 		} );
 	} );
+
+	/* Tombol bagikan di akhir artikel — muncul begitu pembaca sampai ujung */
+	var endShare = document.getElementById( 'endShare' );
+	if ( endShare && 'IntersectionObserver' in window ) {
+		endShare.classList.add( 'end-share--armed' );
+		var endShareObserver = new IntersectionObserver( function ( entries ) {
+			entries.forEach( function ( entry ) {
+				if ( entry.isIntersecting ) {
+					endShare.classList.add( 'is-visible' );
+					endShareObserver.unobserve( entry.target );
+				}
+			} );
+		}, { threshold: 0.4 } );
+		endShareObserver.observe( endShare );
+	}
 }() );

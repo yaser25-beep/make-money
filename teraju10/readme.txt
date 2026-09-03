@@ -1,6 +1,6 @@
 === Teraju10 ===
 Tema WordPress khusus untuk teraju.id.
-Version: 1.11.0
+Version: 1.12.0
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -83,6 +83,10 @@ atau plugin page builder.
    - Isi juga bio penulis lewat Users > Profil > Biographical Info, supaya
      kartu penulis di bawah artikel tidak kosong.
 
+6. (Opsional, sekali saja) Tools > Regenerate WebP
+   - Konversi gambar-gambar lama supaya ikut lebih ringan. Lihat "Gambar
+     otomatis jadi WebP" di bawah.
+
 == Cara pasang AdSense ==
 Sejak versi 1.11.0, kode AdSense diisi lewat Appearance > Customize >
 "AdSense / Iklan" — tidak perlu edit file tema atau pasang plugin lain:
@@ -115,6 +119,36 @@ badan teks demi kenyamanan baca artikel panjang — judul, menu, dan kutipan
 tetap memakai Fraunces seperti sebelumnya supaya kontras display/body-nya
 tetap terjaga. Font ini HANYA dimuat di halaman artikel tunggal (bukan di
 homepage/arsip), supaya halaman lain tetap seringan sebelumnya.
+
+== Gambar otomatis jadi WebP ==
+Sejak versi 1.12.0, setiap gambar JPG/PNG yang diunggah otomatis dibuatkan
+versi WebP-nya (ukuran file biasanya 25-50% lebih kecil, tanpa kelihatan
+bedanya). Pembaca dengan browser modern otomatis menerima versi WebP lewat
+tag <picture>; browser yang tidak mendukung WebP otomatis jatuh ke JPG/PNG
+asli — tidak ada gambar yang bisa rusak/hilang.
+
+  - Gambar BARU: otomatis dikonversi saat diunggah, tidak perlu tindakan apa
+    pun.
+  - Gambar LAMA (ribuan artikel yang sudah ada): buka wp-admin > Tools >
+    Regenerate WebP, lalu klik "Mulai konversi". Diproses bertahap (10
+    gambar per putaran) supaya tidak membebani/timeout server — halaman itu
+    bisa ditinggal jalan sampai selesai, dan aman diulang kapan saja.
+  - Kalau hosting-nya ternyata belum mendukung pembuatan WebP (jarang, tapi
+    bisa terjadi di shared hosting lama), halaman Tools > Regenerate WebP
+    otomatis kasih tahu — situs tetap jalan normal pakai JPG/PNG asli,
+    tidak ada yang error.
+  - AVIF (format lebih baru dari WebP) SENGAJA belum diaktifkan: dukungan
+    generate AVIF di hosting shared masih sangat tidak merata, jadi
+    berisiko diam-diam gagal di banyak server. Bisa ditambahkan belakangan
+    kalau hosting-nya sudah dipastikan mendukung.
+
+== Tombol bagikan di akhir artikel ==
+Sejak versi 1.12.0, begitu pembaca scroll sampai ujung isi artikel, muncul
+kotak ajakan bagikan (WhatsApp/X/salin tautan) dengan animasi halus —
+pola yang sama dipakai media besar (mis. Medium, NYT) karena momen paling
+tinggi niat membagikan adalah TEPAT setelah pembaca selesai baca, bukan cuma
+di bagian atas artikel. Kalau JavaScript pembaca nonaktif, kotak ini tetap
+tampil normal (tidak hilang), cuma tanpa animasi.
 
 == Ticker harga otomatis ==
 Sejak versi 1.1.0, ticker emas & USD/IDR diperbarui sendiri lewat WP-Cron,
@@ -239,6 +273,15 @@ keterbacaan bagian lain artikel tetap utuh. Otomatis berhenti diputar
 (bukan cuma diam di background) untuk pembaca yang mengaktifkan pengaturan
 "reduce motion" di perangkatnya. Kecerahannya disesuaikan otomatis di mode
 gelap supaya tidak menyilaukan.
+
+== Perubahan v1.12.0 (WebP otomatis + tombol share akhir artikel) ==
+- Gambar JPG/PNG otomatis dikonversi ke WebP saat diunggah, disajikan lewat
+  <picture> dengan fallback otomatis. Tersedia juga alat Tools > Regenerate
+  WebP untuk mengonversi ribuan gambar lama secara bertahap. Lihat "Gambar
+  otomatis jadi WebP" di atas.
+- Kotak ajakan bagikan (WhatsApp/X/salin tautan) otomatis muncul begitu
+  pembaca sampai ujung artikel. Lihat "Tombol bagikan di akhir artikel" di
+  atas.
 
 == Perubahan v1.11.0 (AdSense + font artikel Lora) ==
 - Integrasi Google AdSense lewat Customizer (section baru "AdSense / Iklan")

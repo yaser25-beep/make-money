@@ -152,6 +152,24 @@ while ( have_posts() ) :
 					<?php the_content(); ?>
 				</div>
 
+				<div class="end-share" id="endShare">
+					<p class="end-share-label"><?php esc_html_e( 'Artikel ini bermanfaat? Bagikan ke teman-teman Anda.', 'teraju10' ); ?></p>
+					<div class="end-share-buttons">
+						<button type="button" class="end-share-btn" data-share="whatsapp">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.36 7.56L4 20l1.06-4.48A8.5 8.5 0 1 1 21 11.5z"></path></svg>
+							<span class="btn-label"><?php esc_html_e( 'WhatsApp', 'teraju10' ); ?></span>
+						</button>
+						<button type="button" class="end-share-btn" data-share="twitter">
+							<span class="btn-x-glyph" aria-hidden="true">X</span>
+							<span class="btn-label"><?php esc_html_e( 'Bagikan ke X', 'teraju10' ); ?></span>
+						</button>
+						<button type="button" class="end-share-btn" data-share="copy">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"></path><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"></path></svg>
+							<span class="btn-label"><?php esc_html_e( 'Salin tautan', 'teraju10' ); ?></span>
+						</button>
+					</div>
+				</div>
+
 				<?php if ( ! empty( $facts ) ) : ?>
 					<div class="fact-box">
 						<div class="label"><?php esc_html_e( 'Fakta cepat', 'teraju10' ); ?></div>
